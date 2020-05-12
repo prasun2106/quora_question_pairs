@@ -21,7 +21,7 @@
 # 
 # https://www.kaggle.com/c/quora-question-pairs/data
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
@@ -33,20 +33,20 @@ import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[3]:
+# In[2]:
 
 
 #import zipfile
 
 
-# In[8]:
+# In[3]:
 
 
 df_train =  pd.read_csv('../input/quora-question-pairs/train.csv.zip')
 df_train.head()
 
 
-# In[9]:
+# In[4]:
 
 
 df_train_copy = df_train.copy()
@@ -59,7 +59,7 @@ df_train_copy = df_train.copy()
 # **`question1 and question2:`** Question contents  
 # **`is_duplicate:`** Target Variable  
 
-# In[11]:
+# In[5]:
 
 
 # Exploratory Data Analysis
@@ -81,13 +81,13 @@ print(f'Number of repeating questions: {np.sum(qid.value_counts() > 1)}')
 # Plotting the histogram of number repeating questions
 
 
-# In[12]:
+# In[6]:
 
 
 qid.value_counts()
 
 
-# In[13]:
+# In[7]:
 
 
 # plotting the histogram
@@ -104,20 +104,20 @@ plt.ylabel('Number of Questions')
 # # Test Submission
 # 
 
-# In[14]:
+# In[8]:
 
 
 from sklearn.metrics import log_loss
 
 
-# In[15]:
+# In[9]:
 
 
 p = df_train['is_duplicate'].mean()
 print('predicted score:', log_loss(y_true= df_train['is_duplicate'], y_pred =  np.zeros(len(df_train['is_duplicate'])) + p))
 
 
-# In[16]:
+# In[10]:
 
 
 # Submission
@@ -125,49 +125,49 @@ print('predicted score:', log_loss(y_true= df_train['is_duplicate'], y_pred =  n
 df_test = pd.read_csv('../input/quora-question-pairs/test.csv')
 
 
-# In[17]:
+# In[11]:
 
 
 df_train
 
 
-# In[18]:
+# In[12]:
 
 
 df_test.head()
 
 
-# In[19]:
+# In[13]:
 
 
 submission = df_test.copy()
 
 
-# In[20]:
+# In[14]:
 
 
 submission['is_duplicate'] = p
 
 
-# In[21]:
+# In[15]:
 
 
 submission.drop(['question1','question2'],axis =1, inplace = True)
 
 
-# In[22]:
+# In[16]:
 
 
 submission.reset_index(drop = True)
 
 
-# In[23]:
+# In[17]:
 
 
 submission.head()
 
 
-# In[24]:
+# In[18]:
 
 
 #submission.to_csv('baseline.csv',index = False)
@@ -178,7 +178,7 @@ submission.head()
 
 # # Text Analysis
 
-# In[25]:
+# In[19]:
 
 
 df_train.info()
@@ -186,55 +186,68 @@ df_train.info()
 
 # # Missing Values
 
-# In[26]:
+# In[20]:
+
+
+df_train.isna().sum()
+
+
+# In[21]:
 
 
 df_train[df_train['question1'].isna() | df_train['question2'].isna()]
 
 
-# In[27]:
+# In[22]:
 
 
 df_train.dropna(inplace = True)
 
 
-# In[28]:
+# In[23]:
 
 
 df_train.info()
 
 
-# In[29]:
+# In[24]:
 
 
 df_train['question1_len'] = df_train['question1'].apply(len)
 df_train['question2_len'] = df_train['question2'].apply(len)
 
 
-# In[30]:
+# In[25]:
 
 
 df_train.head()
 
 
-# In[31]:
+# In[64]:
 
 
-# plt.figure(figsize = (15,10));
-# plt.hist(df_train['question1_len'], bins = 200, range = [0,200]);
+# Appending both question 1 and 2 together
+question_train = pd.Series(list(df_train['question1']) + list(df_train['question2']))
+question_test = pd.Series(list(df_test['question1'])  + list (df_test['question2']))
+
+# finding length of questions
+question_train_length = pd.Series(question_train.apply(lambda x: len(str(x).split())))
+question_test_length = pd.Series(question_test.apply(lambda x: len(str(x).split())))
 
 
-# In[32]:
+# In[65]:
 
 
-# plt.figure(figsize = (15,10));
-# plt.hist(df_train['question2_len'], bins = 200, range = [0,200]);
+#plotting the length of question 1 and 2 from the training set
+plt.figure(figsize = (17,8))
+plt.xlim(0,200)
+sns.distplot(question_train_length,bins = 200, norm_hist = True, label = 'train') 
+sns.distplot(question_test_length, bins = 200, norm_hist = True, label = 'test')
 
 
-# In[33]:
+# In[ ]:
 
 
-#plotting it again with extra details
 train_qs = pd.Series(df_train['question1'].tolist() + df_train['question2'].tolist()).astype(str)
 test_qs = pd.Series(df_test['question1'].tolist() + df_test['question2'].tolist()).astype(str)
 
@@ -242,7 +255,13 @@ dist_train = train_qs.apply(len)
 dist_test = test_qs.apply(len)
 
 
-# In[42]:
+# In[34]:
+
+
+train_qs
+
+
+# In[30]:
 
 
 #Histogram
@@ -258,14 +277,14 @@ plt.ylabel('Normalised frequency (Probability)');
 plt.legend()
 
 
-# In[35]:
+# In[31]:
 
 
 len('djnfjdfj jnsndjsfn')
 len('jdjf jnvjn'.split(' '))
 
 
-# In[36]:
+# In[ ]:
 
 
 train_word = train_qs.apply(lambda x: x.split(' '))
@@ -274,7 +293,7 @@ n_word_train = train_word.apply(len)
 n_word_test = test_word.apply(len)
 
 
-# In[39]:
+# In[ ]:
 
 
 # Plotting Histogram of word count
@@ -292,21 +311,21 @@ plt.ylabel('Normalized frequency (Probability)')
 
 # Distribution for both training and testing set is almost same. Let's look at the most common words.
 
-# In[43]:
+# In[ ]:
 
 
 duplicate = df_train.groupby('is_duplicate')
 duplicate[['question1_len','question2_len']].mean()
 
 
-# In[44]:
+# In[ ]:
 
 
 df_train['question1_word'] = df_train['question1'].apply(lambda x : len(x.split(' ')))
 df_train['question2_word'] = df_train['question2'].apply(lambda x : len(x.split(' ')))
 
 
-# In[45]:
+# In[ ]:
 
 
 duplicate[['question1_word','question2_word']].mean()
@@ -314,7 +333,7 @@ duplicate[['question1_word','question2_word']].mean()
 
 # From the above two averages, we can conclude that number of words and number of characters are lesser in the duplicate pairs
 
-# In[46]:
+# In[ ]:
 
 
 # Word Cloud
@@ -324,7 +343,7 @@ duplicate[['question1_word','question2_word']].mean()
 # word_cloud = WordCloud(width = 800, height = 400, max_words = 250, background_color= 'White', colormap = 'Blues').generate(" ".join(train_qs.astype(str)))
 
 
-# In[47]:
+# In[ ]:
 
 
 # plt.figure(figsize = (25,20))
@@ -365,41 +384,41 @@ duplicate[['question1_word','question2_word']].mean()
 # ### Second Step:
 # After these steps we can attach parts of speec tag to each word in both the questions. In the first step we checked the ratio of similar lemma based only on its face value. In the second step (the modification), we will check the similar words ratio on the basis of the lemma as well as the POS tag attached to it.
 
-# In[48]:
+# In[ ]:
 
 
 question1 = df_train['question1']
 question2 = df_train['question2']
 
 
-# In[49]:
+# In[ ]:
 
 
 # removing punctuation and converting to lower case
 import string
 
 
-# In[50]:
+# In[ ]:
 
 
 question1 = question1.apply((lambda x: (''.join(c for c in x if c not in string.punctuation)).lower()))
 question2 = question2.apply((lambda x: (''.join(c for c in x if c not in string.punctuation)).lower()))
 
 
-# In[51]:
+# In[ ]:
 
 
 # Tokenization:
 from nltk.tokenize import word_tokenize
 
 
-# In[52]:
+# In[ ]:
 
 
 import time
 
 
-# In[53]:
+# In[ ]:
 
 
 start  = time.time()
@@ -417,20 +436,20 @@ print(f'time taken = {start - end}')
 # print(f'time taken = {start - end}')
 
 
-# In[54]:
+# In[ ]:
 
 
 # Stopwords removal
 from nltk.corpus import stopwords
 
 
-# In[55]:
+# In[ ]:
 
 
 question1_stopwords = question1.apply(lambda x: (c for c in x if c not in stopwords.words('english')))
 
 
-# In[57]:
+# In[ ]:
 
 
 question1_stopwords = list(map(lambda x: [word for word in x if word not in stopwords.words('english')], question1))
