@@ -19,6 +19,12 @@
 # ## Approach:
 # The approach is explained in the following steps:
 # 1. Exploratory Data Analysis
+#     - Basic exploration
+#     - Missing Values
+#     - Outliers
+#     - Univariate/Bivariate - if applicable
+#     - Feature normaliation
+#     - Feature Engineering
 # 2. Text Analysis Steps:
 #     - Text Processing
 #         - Normalization
@@ -36,7 +42,7 @@
 # 
 # Without further ado, let's start with importing data
 
-# In[ ]:
+# In[1]:
 
 
 import numpy as np
@@ -46,466 +52,108 @@ import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[ ]:
+# In[2]:
 
 
-df_train =  pd.read_csv('../input/quora-question-pairs/train.csv.zip')
+df_train =  pd.read_csv('train.csv.zip')
 df_train.head(3)
 
 
-# In[ ]:
+# In[3]:
 
 
-df_test = pd.read_csv('../input/quora-question-pairs/test.csv.zip')
+df_test = pd.read_csv('test.csv.zip')
 df_test.head(3)
 
 
 # ## 1. Exploratory Data Analysis
 
-# In[ ]:
+# In[4]:
 
 
 # Number of question pairs in train and test set
 # Number of dupicate pairs in train
-# Number of unique questions in the entire dataset
+# Number of unique questions in the entire train dataset
+# Number of duplicate questions in the entire dataset
 
 print(f'shape of train:{df_train.shape}')
 print(f'shape of test:{df_test.shape}')
-print(f'number of duplicate pairs in train:{df_train.is_duplicate.sum()}')
+print(f'number of pairs having same questions in train:{df_train.is_duplicate.sum()}')
+print(f'number of pairs having different questions in train:{df_train.shape[0] - df_train.is_duplicate.sum()}')
 all_questions_train = pd.concat([df_train['question1'],df_train['question2']], axis = 0)
-print(f'toal number of questions in train:{len(all)}')
+all_questions_train = list(all_questions_train)
+all_questions_test = pd.concat([df_test['question1'],df_test['question2']], axis = 0)
+all_questions_test = list(all_questions_test)
+print(f'total number of questions in train:{len(list(all_questions_train))}')
+print(f'total number of questions in test:{len(list(all_questions_test))}')
+print(f'total number of unique questions in train:{len(set(all_questions_train))}')
+print(f'total number of unique questions in test:{len(set(all_questions_test))}')
+print(f'total number of duplicate questions in train:{len(all_questions_train) - len(set(all_questions_train))}')
+print(f'total number of duplicate questions in test:{len(all_questions_test) - len(set(all_questions_test))}')
 
 
+# In[5]:
 
-qid = pd.Series(df_train['qid1'].tolist() + df_train['qid2'].tolist())
-
-print(f'The total number of question pairs in the training set: {len(df_train)}')
-print(f"Duplicate Pairs: {sum(df_train['is_duplicate'])}")
-print(f"Number of unique questions: {df_train['qid1'].append(df_train['qid2']).nunique()}")
-#print(f"Number of repeating questions: {len(df_train['qid1'].append(df_train['qid2'])) - df_train['qid1'].append(df_train['qid2']).nunique()}")
-
-print(f'Number of repeating questions: {np.sum(qid.value_counts() > 1)}')
-
-
-# Plotting the histogram of number repeating questions
-
-
-# In[ ]:
-
-
-qid.value_counts()
-
-
-# In[ ]:
-
-
-# plotting the histogram
 
 plt.figure(figsize =  (12,5))
-
-plt.hist(qid.value_counts(), bins = 50)
+plt.hist(pd.Series(all_questions_train).value_counts(), bins = 50, color = 'black', label = 'train')
+plt.hist(pd.Series(all_questions_test).value_counts(), alpha = 0.5, bins = 50, color = 'gray', label = 'test')
 plt.yscale('log')
 plt.title('Number of occurences of questions')
 plt.xlabel('Number of occurences')
 plt.ylabel('Number of Questions')
-
-
-# # Test Submission
-# 
-
-# In[ ]:
-
-
-from sklearn.metrics import log_loss
-
-
-# In[ ]:
-
-
-p = df_train['is_duplicate'].mean()
-print('predicted score:', log_loss(y_true= df_train['is_duplicate'], y_pred =  np.zeros(len(df_train['is_duplicate'])) + p))
-
-
-# In[ ]:
-
-
-# Submission
-
-df_test = pd.read_csv('../input/quora-question-pairs/test.csv')
-
-
-# In[ ]:
-
-
-df_train
-
-
-# In[ ]:
-
-
-df_test.head()
-
-
-# In[ ]:
-
-
-submission = df_test.copy()
-
-
-# In[ ]:
-
-
-# submission['is_duplicate'] = p
-
-
-# In[ ]:
-
-
-submission.drop(['question1','question2'],axis =1, inplace = True)
-
-
-# In[ ]:
-
-
-submission.reset_index(drop = True)
-
-
-# In[ ]:
-
-
-submission.head()
-
-
-# In[ ]:
-
-
-#submission.to_csv('baseline.csv',index = False)
-
-
-# Leaderboard score - 0.55  
-# Predicted score - 0.65
-
-# # Text Analysis
-
-# In[ ]:
-
-
-df_train.info()
-
-
-# # Missing Values
-
-# In[ ]:
-
-
-df_train.isna().sum()
-
-
-# In[ ]:
-
-
-df_train[df_train['question1'].isna() | df_train['question2'].isna()]
-
-
-# In[ ]:
-
-
-df_train.dropna(inplace = True)
-
-
-# In[ ]:
-
-
-df_train.info()
-
-
-# In[ ]:
-
-
-df_train['question1_len'] = df_train['question1'].apply(len)
-df_train['question2_len'] = df_train['question2'].apply(len)
-
-
-# In[ ]:
-
-
-df_train.head()
-
-
-# In[ ]:
-
-
-# Appending both question 1 and 2 together
-question_train = pd.Series(list(df_train['question1']) + list(df_train['question2']))
-question_test = pd.Series(list(df_test['question1'])  + list (df_test['question2']))
-
-# finding length of questions
-question_train_length = pd.Series(question_train.apply(lambda x: len(str(x).split())))
-question_test_length = pd.Series(question_test.apply(lambda x: len(str(x).split())))
-
-
-# In[ ]:
-
-
-#plotting the length of question 1 and 2 from the training set
-plt.figure(figsize = (17,8))
-plt.xlim(0,200)
-sns.distplot(question_train_length,bins = 200, norm_hist = True, label = 'train') 
-sns.distplot(question_test_length, bins = 200, norm_hist = True, label = 'test')
-
-
-# In[ ]:
-
-
-train_qs = pd.Series(df_train['question1'].tolist() + df_train['question2'].tolist()).astype(str)
-test_qs = pd.Series(df_test['question1'].tolist() + df_test['question2'].tolist()).astype(str)
-
-dist_train = train_qs.apply(len)
-dist_test = test_qs.apply(len)
-
-
-# In[ ]:
-
-
-train_qs
-
-
-# In[ ]:
-
-
-#Histogram
-
-plt.figure (figsize = (15,10));
-
-plt.hist(dist_train, bins = 200, range = [0,200], color = [0.4, 0.3, 0.1], label = 'Train', normed = True);
-plt.hist(dist_test, bins = 200, range = [0,200], color = [0.2,0.8,0.1], label = 'Test',normed = True, alpha = 0.7);
-
-plt.title('Normalized histogram of Character Count in training and testing set questions');
-plt.xlabel('Number of Words');
-plt.ylabel('Normalised frequency (Probability)');
 plt.legend()
 
 
-# In[ ]:
-
-
-len('djnfjdfj jnsndjsfn')
-len('jdjf jnvjn'.split(' '))
-
-
-# In[ ]:
-
-
-train_word = train_qs.apply(lambda x: x.split(' '))
-test_word = test_qs.apply(lambda x : x.split(' '))
-n_word_train = train_word.apply(len)
-n_word_test = test_word.apply(len)
-
-
-# In[ ]:
-
-
-# Plotting Histogram of word count
-
-plt.figure(figsize = (15,10))
-
-plt.hist(n_word_train, bins = 50, range = [0,100], color = [0.9,0.3,0.1],density = True, label = 'Train');
-plt.hist(n_word_test, bins = 50, range = [0,100], color = [0.0,1,0], density = True, alpha = 0.5, label = 'Test' );
-
-plt.legend()
-plt.title('Histogram of number of words in training and testing sets')
-plt.xlabel('Number of words')
-plt.ylabel('Normalized frequency (Probability)')
-
-
-# Distribution for both training and testing set is almost same. Let's look at the most common words.
-
-# In[ ]:
-
-
-duplicate = df_train.groupby('is_duplicate')
-duplicate[['question1_len','question2_len']].mean()
-
-
-# In[ ]:
-
-
-df_train['question1_word'] = df_train['question1'].apply(lambda x : len(x.split(' ')))
-df_train['question2_word'] = df_train['question2'].apply(lambda x : len(x.split(' ')))
-
-
-# In[ ]:
-
-
-duplicate[['question1_word','question2_word']].mean()
-
-
-# From the above two averages, we can conclude that number of words and number of characters are lesser in the duplicate pairs
-
-# In[ ]:
-
-
-# Word Cloud
-
-# from wordcloud import WordCloud
-
-# word_cloud = WordCloud(width = 800, height = 400, max_words = 250, background_color= 'White', colormap = 'Blues').generate(" ".join(train_qs.astype(str)))
-
-
-# In[ ]:
-
-
-# plt.figure(figsize = (25,20))
-
-# plt.imshow(word_cloud)
-
-
-# # Steps of NLP:
+# There is a large difference in distribution of train set and test set. This might be due to auto-generated questions. From the competition's description:
 # 
-# For finding the matches between both the questions we will have to create a suitable feature.
+# > As an anti-cheating measure, Kaggle has supplemented the test set with computer-generated question pairs. Those rows do not come from Quora, and are not counted in the scoring. All of the questions in the training set are genuine examples from Quora.
+
+# ### Missing values
+
+# In[15]:
+
+
+print(df_train.isna().sum())
+print(df_test.isna().sum())
+
+
+# In[21]:
+
+
+df_train[df_train['question1'].isna()|df_train['question2'].isna()]
+
+
+# In[20]:
+
+
+df_test[df_test['question1'].isna()|df_test['question2'].isna()]
+
+
+# One interresting thing to note here is that the train and test set both contains few null entries and the questions are all related when there is a null in the second question. In test set, we observe the same question repeating again and again as they are auto-generated with reordering of words.
 # 
-# Our first feature is going to be word-match-share.
-# 
-# 1. Initial Feature Analysis
+# Let's drop rows having missing values in train as they are very few. We can't drop rows in test set as we will lose test set ids and then we won't be able to submit our solution. Let's fill test set null with 'not available' for now.
 
-# 1. training set - question 1  
-# for a row - i will find the total number of unique words:
-# 1. i will find the exact common words ratio (after removing stopwords)
-# 2. I will find the common lemma or roots
-# 3. In both the cases, the distribution of duplicate will be plotted
-# 
-# Steps:
-# 1. remove punctuation
-# 2. make them small letters
-# 3. remove stopwords
-# 4. stemming
+# In[23]:
 
-# ### First Step:
-# For finding the duplicate questions, we will check the ratio of similar lemma to the total number of unique lemma after removing the stopwords.
-# Few transformations will be applied to each questions:
-# 1. Normalization
-#     * Lowercase
-#     * Punctuation removal
-# 2. Tokenization
-# 3. Stopwords Removal
-# 4. Lemmatization
-# 
-# ### Second Step:
-# After these steps we can attach parts of speec tag to each word in both the questions. In the first step we checked the ratio of similar lemma based only on its face value. In the second step (the modification), we will check the similar words ratio on the basis of the lemma as well as the POS tag attached to it.
 
-# In[ ]:
+df_train.dropna(inplace =True)
+df_test.replace(np.nan, 'not available', inplace = True)
 
 
-question1 = df_train['question1']
-question2 = df_train['question2']
+# In[24]:
 
 
-# In[ ]:
+# Analyzing number of words
+df_train['len_1'] = df_train['question1'].apply(lambda x: len(x.split()))
+df_train['len_2'] = df_train['question2'].apply(lambda x: len(x.split()))
 
 
-# removing punctuation and converting to lower case
-import string
+# In[27]:
 
 
-# In[ ]:
-
-
-question1 = question1.apply((lambda x: (''.join(c for c in x if c not in string.punctuation)).lower()))
-question2 = question2.apply((lambda x: (''.join(c for c in x if c not in string.punctuation)).lower()))
-
-
-# In[ ]:
-
-
-# Tokenization:
-from nltk.tokenize import word_tokenize
-
-
-# In[ ]:
-
-
-import time
-
-
-# In[ ]:
-
-
-start  = time.time()
-question1 = question1.apply(lambda x: word_tokenize(x))
-end = time.time()
-print(f'time taken = {start - end}')
-
-
-# In[ ]:
-
-
-# start  = time.time()
-# question1_map =pd.Series(list(map(word_tokenize,question1)))
-# end = time.time()
-# print(f'time taken = {start - end}')
-
-
-# In[ ]:
-
-
-# Stopwords removal
-from nltk.corpus import stopwords
-
-
-# In[ ]:
-
-
-question1_stopwords = question1.apply(lambda x: (c for c in x if c not in stopwords.words('english')))
-
-
-# In[ ]:
-
-
-question1_stopwords = list(map(lambda x: [word for word in x if word not in stopwords.words('english')], question1))
-
-
-# In[ ]:
-
-
-question2_stopwords = list(map(lambda x: [word for word in x if word not in stopwords.words('english')], question2))
-
-
-# In[ ]:
-
-
-# Lemmatization
-from nltk import pos_tag
-# Due to the amount of data, pos tagging is taking a long time. So we are skipping it for now
-
-
-# In[ ]:
-
-
-# question1_pos = question1_stopwords.apply(lambda x : pos_tag(x))
-
-
-# In[ ]:
-
-
-# question2_pos = question2_stopwords.apply(lambda x : pos_tag(x))
-
-
-# In[ ]:
-
-
-from nltk.stem import PorterStemmer
-
-
-# In[ ]:
-
-
-stemmer = PorterStemmer()
-
-
-# In[ ]:
-
-
-list(map(stemmer.stem, ))
+df_test['len_1'] = df_test['question1'].apply(lambda x: len(x.split()))
+df_test['len_2'] = df_test['question2'].apply(lambda x: len(x.split()))
 
 
 # In[ ]:

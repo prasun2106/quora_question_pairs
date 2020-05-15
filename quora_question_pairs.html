@@ -13088,7 +13088,15 @@ div#notebook {
 </ul>
 <h2 id="Approach:">Approach:<a class="anchor-link" href="#Approach:">&#182;</a></h2><p>The approach is explained in the following steps:</p>
 <ol>
-<li>Exploratory Data Analysis</li>
+<li>Exploratory Data Analysis<ul>
+<li>Basic exploration</li>
+<li>Missing Values</li>
+<li>Outliers</li>
+<li>Univariate/Bivariate - if applicable</li>
+<li>Feature normaliation</li>
+<li>Feature Engineering</li>
+</ul>
+</li>
 <li>Text Analysis Steps:<ul>
 <li>Text Processing<ul>
 <li>Normalization<ul>
@@ -13121,7 +13129,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13138,10 +13146,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../input/quora-question-pairs/train.csv.zip&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv.zip&#39;</span><span class="p">)</span>
 <span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
@@ -13149,17 +13157,167 @@ div#notebook {
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[2]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>qid1</th>
+      <th>qid2</th>
+      <th>question1</th>
+      <th>question2</th>
+      <th>is_duplicate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>What is the step by step guide to invest in sh...</td>
+      <td>What is the step by step guide to invest in sh...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>What is the story of Kohinoor (Koh-i-Noor) Dia...</td>
+      <td>What would happen if the Indian government sto...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>5</td>
+      <td>6</td>
+      <td>How can I increase the speed of my internet co...</td>
+      <td>How can Internet speed be increased by hacking...</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../input/quora-question-pairs/test.csv.zip&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;test.csv.zip&#39;</span><span class="p">)</span>
 <span class="n">df_test</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\IPython\core\interactiveshell.py:3063: DtypeWarning: Columns (0) have mixed types.Specify dtype option on import or set low_memory=False.
+  interactivity=interactivity, compiler=compiler, result=result)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[3]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>test_id</th>
+      <th>question1</th>
+      <th>question2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>How does the Surface Pro himself 4 compare wit...</td>
+      <td>Why did Microsoft choose core m3 and not core ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Should I have a hair transplant at age 24? How...</td>
+      <td>How much cost does hair transplant require?</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>What but is the best way to send money from Ch...</td>
+      <td>What you send money to China?</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13173,422 +13331,74 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of question pairs in train and test set</span>
 <span class="c1"># Number of dupicate pairs in train</span>
-<span class="c1"># Number of unique questions in the entire dataset</span>
+<span class="c1"># Number of unique questions in the entire train dataset</span>
+<span class="c1"># Number of duplicate questions in the entire dataset</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;shape of train:</span><span class="si">{df_train.shape}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;shape of test:</span><span class="si">{df_test.shape}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;number of duplicate pairs in train:{df_train.is_duplicate.sum()}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;number of pairs having same questions in train:{df_train.is_duplicate.sum()}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;number of pairs having different questions in train:{df_train.shape[0] - df_train.is_duplicate.sum()}&#39;</span><span class="p">)</span>
 <span class="n">all_questions_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">],</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;toal number of questions in train:{len(all)}&#39;</span><span class="p">)</span>
-
-
-
-<span class="n">qid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;qid1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;qid2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of question pairs in the training set: {len(df_train)}&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate Pairs: {sum(df_train[&#39;is_duplicate&#39;])}&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of unique questions: {df_train[&#39;qid1&#39;].append(df_train[&#39;qid2&#39;]).nunique()}&quot;</span><span class="p">)</span>
-<span class="c1">#print(f&quot;Number of repeating questions: {len(df_train[&#39;qid1&#39;].append(df_train[&#39;qid2&#39;])) - df_train[&#39;qid1&#39;].append(df_train[&#39;qid2&#39;]).nunique()}&quot;)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Number of repeating questions: {np.sum(qid.value_counts() &gt; 1)}&#39;</span><span class="p">)</span>
-
-
-<span class="c1"># Plotting the histogram of number repeating questions</span>
+<span class="n">all_questions_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_questions_train</span><span class="p">)</span>
+<span class="n">all_questions_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">],</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">all_questions_test</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_questions_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of questions in train:{len(list(all_questions_train))}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of questions in test:{len(list(all_questions_test))}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of unique questions in train:{len(set(all_questions_train))}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of unique questions in test:{len(set(all_questions_test))}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of duplicate questions in train:{len(all_questions_train) - len(set(all_questions_train))}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total number of duplicate questions in test:{len(all_questions_test) - len(set(all_questions_test))}&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape of train:(404290, 6)
+shape of test:(3563475, 3)
+number of pairs having same questions in train:149263
+number of pairs having different questions in train:255027
+total number of questions in train:808580
+total number of questions in test:7126950
+total number of unique questions in train:537361
+total number of unique questions in test:4363832
+total number of duplicate questions in train:271219
+total number of duplicate questions in test:2763118
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">qid</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plotting the histogram</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span>  <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qid</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span>  <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">all_questions_train</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">all_questions_test</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of occurences of questions&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of occurences&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of Questions&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Test-Submission">Test Submission<a class="anchor-link" href="#Test-Submission">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">log_loss</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;predicted score:&#39;</span><span class="p">,</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">],</span> <span class="n">y_pred</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]))</span> <span class="o">+</span> <span class="n">p</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Submission</span>
-
-<span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../input/quora-question-pairs/test.csv&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">submission</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># submission[&#39;is_duplicate&#39;] = p</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">submission</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">],</span><span class="n">axis</span> <span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">submission</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">submission</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#submission.to_csv(&#39;baseline.csv&#39;,index = False)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Leaderboard score - 0.55<br>
-Predicted score - 0.65</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Text-Analysis">Text Analysis<a class="anchor-link" href="#Text-Analysis">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Missing-Values">Missing Values<a class="anchor-link" href="#Missing-Values">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">|</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1_len&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2_len&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Appending both question 1 and 2 together</span>
-<span class="n">question_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]))</span>
-<span class="n">question_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">])</span>  <span class="o">+</span> <span class="nb">list</span> <span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]))</span>
-
-<span class="c1"># finding length of questions</span>
-<span class="n">question_train_length</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">question_train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
-<span class="n">question_test_length</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">question_test</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#plotting the length of question 1 and 2 from the training set</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">question_train_length</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">norm_hist</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span> 
-<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">question_test_length</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">norm_hist</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_qs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">test_qs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-
-<span class="n">dist_train</span> <span class="o">=</span> <span class="n">train_qs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-<span class="n">dist_test</span> <span class="o">=</span> <span class="n">test_qs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_qs</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Histogram</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span> <span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">dist_train</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="n">normed</span> <span class="o">=</span> <span class="kc">True</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">dist_test</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span><span class="p">,</span><span class="n">normed</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">);</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Normalized histogram of Character Count in training and testing set questions&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Words&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalised frequency (Probability)&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 
@@ -13596,56 +13406,38 @@ Predicted score - 0.65</p>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;djnfjdfj jnsndjsfn&#39;</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="s1">&#39;jdjf jnvjn&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
-    </div>
-</div>
-</div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_word</span> <span class="o">=</span> <span class="n">train_qs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
-<span class="n">test_word</span> <span class="o">=</span> <span class="n">test_qs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
-<span class="n">n_word_train</span> <span class="o">=</span> <span class="n">train_word</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-<span class="n">n_word_test</span> <span class="o">=</span> <span class="n">test_word</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-</pre></div>
+<div class="output_area">
 
-    </div>
-</div>
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.legend.Legend at 0x1e806a59048&gt;</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plotting Histogram of word count</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<div class="output_area">
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">n_word_train</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],</span><span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Train&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">n_word_test</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span> <span class="p">);</span>
+    <div class="prompt"></div>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of number of words in training and testing sets&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of words&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Normalized frequency (Probability)&#39;</span><span class="p">)</span>
-</pre></div>
 
-    </div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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7+W0006b8H6HHnoo9957bxci+rWBTKYt85AkSeqdJFP6Gs9oyfRjjz025n7Lly9n6623nvTn7MRAJtOWeUiSJE0fJ5xwAjfccAN77703++23Hy9+8Yt5wxvewLOf/WwAXvWqV7Hvvvuy5557snTp0if222WXXbjrrru4+eab2X333TnuuOPYc889Oeigg3jwwQenJLaBnBqv11asWDHhfRYuXDjlcUiSJE0Hp5xyCitXruTKK69kxYoVvPKVr2TlypVPzLhxxhlnsO222/Lggw+y33778drXvpY5c+Y86RjXX389Z599Np/4xCc44ogj+MIXvsAxxxyzzrGZTEuSJGmg7L///k+auu6jH/0oX/rSlwC45ZZbuP76638jmZ4/fz577703APvuuy8333zzlMQykMm0D22RJEmavrbYYosn3q9YsYJvfetbXHzxxWy++eYsXLhwxKntNttssyfez5gxY8rKPKyZliRJUl+bNWsW999//4jr1qxZwzbbbMPmm2/OT37yE/7jP/5jvcY2kCPTkiRJmj7mzJnDgQceyF577cVTnvIUnva0pz2x7uCDD+b000/nOc95DrvtthvPe97z1mtsJtOSJEmakKpa7+f83Oc+N2L7Zpttxte//vUR162ti547dy4rV658ov3444+fsrgGsszDeaYlSZLUDwYymbZmWpIkSf1gIJNpSZIkqR+YTEuSJEmTZDItSZIkTZLJtCRJkjRJJtOSJEnqa/feey+nnXbapPb98Ic/zC9/+cspjujXBnKeaR8nLkmS1DsrVqyY0uMtXLhwzPVrk+m3ve1tEz72hz/8YY455hg233zzSUY3toFMpqtqGbBsaGjouF7HIkmSpO464YQTuOGGG9h77715+ctfzlOf+lTOPfdcHn74YV796lezZMkSHnjgAY444ghWr17NY489xl/91V9x++23c9ttt/HiF7+YuXPncuGFF055bAOZTEuSJGn6OOWUU1i5ciVXXnklF1xwAeeddx6XXHIJVcVhhx3GRRddxJ133skOO+zA1772NQDWrFnD7Nmz+dCHPsSFF17I3LlzuxKbNdOSJEkaGBdccAEXXHABz33uc9lnn334yU9+wvXXX8+zn/1svvWtb/Ge97yH7373u6yvh/s5Mi1JkqSBUVWceOKJvOUtb/mNdZdffjnLly/nxBNP5KCDDuKkk07q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
+"
+>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13653,100 +13445,9 @@ Predicted score - 0.65</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Distribution for both training and testing set is almost same. Let's look at the most common words.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">duplicate</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">)</span>
-<span class="n">duplicate</span><span class="p">[[</span><span class="s1">&#39;question1_len&#39;</span><span class="p">,</span><span class="s1">&#39;question2_len&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1_word&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)))</span>
-<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2_word&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">duplicate</span><span class="p">[[</span><span class="s1">&#39;question1_word&#39;</span><span class="p">,</span><span class="s1">&#39;question2_word&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>From the above two averages, we can conclude that number of words and number of characters are lesser in the duplicate pairs</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Word Cloud</span>
-
-<span class="c1"># from wordcloud import WordCloud</span>
-
-<span class="c1"># word_cloud = WordCloud(width = 800, height = 400, max_words = 250, background_color= &#39;White&#39;, colormap = &#39;Blues&#39;).generate(&quot; &quot;.join(train_qs.astype(str)))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plt.figure(figsize = (25,20))</span>
-
-<span class="c1"># plt.imshow(word_cloud)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Steps-of-NLP:">Steps of NLP:<a class="anchor-link" href="#Steps-of-NLP:">&#182;</a></h1><p>For finding the matches between both the questions we will have to create a suitable feature.</p>
-<p>Our first feature is going to be word-match-share.</p>
-<ol>
-<li>Initial Feature Analysis</li>
-</ol>
+<p>There is a large difference in distribution of train set and test set. This might be due to auto-generated questions. From the competition's description:</p>
+<blockquote><p>As an anti-cheating measure, Kaggle has supplemented the test set with computer-generated question pairs. Those rows do not come from Quora, and are not counted in the scoring. All of the questions in the training set are genuine examples from Quora.</p>
+</blockquote>
 
 </div>
 </div>
@@ -13754,51 +13455,268 @@ Predicted score - 0.65</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-<li>training set - question 1<br>
-for a row - i will find the total number of unique words:</li>
-<li>i will find the exact common words ratio (after removing stopwords)</li>
-<li>I will find the common lemma or roots</li>
-<li>In both the cases, the distribution of duplicate will be plotted</li>
-</ol>
-<p>Steps:</p>
-<ol>
-<li>remove punctuation</li>
-<li>make them small letters</li>
-<li>remove stopwords</li>
-<li>stemming</li>
-</ol>
+<h3 id="Missing-values">Missing values<a class="anchor-link" href="#Missing-values">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df_train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_test</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>id              0
+qid1            0
+qid2            0
+question1       1
+question2       2
+is_duplicate    0
+dtype: int64
+test_id      0
+question1    4
+question2    6
+dtype: int64
+</pre>
+</div>
+</div>
 
 </div>
 </div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">|</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[21]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>qid1</th>
+      <th>qid2</th>
+      <th>question1</th>
+      <th>question2</th>
+      <th>is_duplicate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>105780</th>
+      <td>105780</td>
+      <td>174363</td>
+      <td>174364</td>
+      <td>How can I develop android app?</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>201841</th>
+      <td>201841</td>
+      <td>303951</td>
+      <td>174364</td>
+      <td>How can I create an Android app?</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>363362</th>
+      <td>363362</td>
+      <td>493340</td>
+      <td>493341</td>
+      <td>NaN</td>
+      <td>My Chinese name is Haichao Yu. What English na...</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_test</span><span class="p">[</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">|</span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>test_id</th>
+      <th>question1</th>
+      <th>question2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>379205</th>
+      <td>379205</td>
+      <td>How I can learn android app development?</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>817520</th>
+      <td>817520</td>
+      <td>How real can learn android app development?</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>943911</th>
+      <td>943911</td>
+      <td>How app development?</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1046690</th>
+      <td>1046690</td>
+      <td>NaN</td>
+      <td>How I what can learn android app development?</td>
+    </tr>
+    <tr>
+      <th>1270024</th>
+      <td>1270024</td>
+      <td>How I can learn app development?</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1461432</th>
+      <td>1461432</td>
+      <td>NaN</td>
+      <td>How distinct can learn android app development?</td>
+    </tr>
+    <tr>
+      <th>2345796</th>
+      <td>life in dublin?"</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2487703</th>
+      <td>1270024</td>
+      <td>How I can learn app development?</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2679111</th>
+      <td>1461432</td>
+      <td>NaN</td>
+      <td>How distinct can learn android app development?</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="First-Step:">First Step:<a class="anchor-link" href="#First-Step:">&#182;</a></h3><p>For finding the duplicate questions, we will check the ratio of similar lemma to the total number of unique lemma after removing the stopwords.
-Few transformations will be applied to each questions:</p>
-<ol>
-<li>Normalization<ul>
-<li>Lowercase</li>
-<li>Punctuation removal</li>
-</ul>
-</li>
-<li>Tokenization</li>
-<li>Stopwords Removal</li>
-<li>Lemmatization</li>
-</ol>
-<h3 id="Second-Step:">Second Step:<a class="anchor-link" href="#Second-Step:">&#182;</a></h3><p>After these steps we can attach parts of speec tag to each word in both the questions. In the first step we checked the ratio of similar lemma based only on its face value. In the second step (the modification), we will check the similar words ratio on the basis of the lemma as well as the POS tag attached to it.</p>
+<p>One interresting thing to note here is that the train and test set both contains few null entries and the questions are all related when there is a null in the second question. In test set, we observe the same question repeating again and again as they are auto-generated with reordering of words.</p>
+<p>Let's drop rows having missing values in train as they are very few. We can't drop rows in test set as we will lose test set ids and then we won't be able to submit our solution. Let's fill test set null with 'not available' for now.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question1</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span>
-<span class="n">question2</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_test</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;not available&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13808,11 +13726,12 @@ Few transformations will be applied to each questions:</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># removing punctuation and converting to lower case</span>
-<span class="kn">import</span> <span class="nn">string</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Analyzing number of words</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;len_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;len_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </pre></div>
 
     </div>
@@ -13822,203 +13741,11 @@ Few transformations will be applied to each questions:</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question1</span> <span class="o">=</span> <span class="n">question1</span><span class="o">.</span><span class="n">apply</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
-<span class="n">question2</span> <span class="o">=</span> <span class="n">question2</span><span class="o">.</span><span class="n">apply</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tokenization:</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span>  <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">question1</span> <span class="o">=</span> <span class="n">question1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;time taken = {start - end}&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># start  = time.time()</span>
-<span class="c1"># question1_map =pd.Series(list(map(word_tokenize,question1)))</span>
-<span class="c1"># end = time.time()</span>
-<span class="c1"># print(f&#39;time taken = {start - end}&#39;)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Stopwords removal</span>
-<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> <span class="n">question1_stopwords</span> <span class="o">=</span> <span class="n">question1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question1_stopwords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)],</span> <span class="n">question1</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question2_stopwords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)],</span> <span class="n">question2</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Lemmatization</span>
-<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">pos_tag</span>
-<span class="c1"># Due to the amount of data, pos tagging is taking a long time. So we are skipping it for now</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># question1_pos = question1_stopwords.apply(lambda x : pos_tag(x))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># question2_pos = question2_stopwords.apply(lambda x : pos_tag(x))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">PorterStemmer</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stemmer</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;len_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;len_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </pre></div>
 
     </div>
