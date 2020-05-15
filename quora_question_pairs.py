@@ -1,72 +1,81 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Quora Question Pairs Competition on Kaggle
-# ### Link to the competition:
-# https://www.kaggle.com/c/quora-question-pairs/overview
-# ### Competition Description:
-# **The goal of this competition is to predict which of the provided pairs of questions contain two questions with the same meaning.**
+# # <div style="text-align: center"> [Quora Question Pairs Competition on Kaggle](https://www.kaggle.com/c/quora-question-pairs/overview) </div> 
+# ## Description
+# The goal of this competition is to predict which of the provided pairs of questions contain two questions with the same meaning.
 # 
+# ### [Data Description](https://www.kaggle.com/c/quora-question-pairs/data) from [competition site](https://www.kaggle.com/c/quora-question-pairs/data):
 # The ground truth is the set of labels that have been supplied by human experts. The ground truth labels are inherently subjective, as the true meaning of sentences can never be known with certainty. Human labeling is also a 'noisy' process, and reasonable people will disagree. As a result, the ground truth labels on this dataset should be taken to be 'informed' but not 100% accurate, and may include incorrect labeling. We believe the labels, on the whole, to represent a reasonable consensus, but this may often not be true on a case by case basis for individual items in the dataset.
 # 
 # Please note: as an anti-cheating measure, Kaggle has supplemented the test set with computer-generated question pairs. Those rows do not come from Quora, and are not counted in the scoring. All of the questions in the training set are genuine examples from Quora.
 # 
-# Data fields
-# id - the id of a training set question pair
-# qid1, qid2 - unique ids of each question (only available in train.csv)
-# question1, question2 - the full text of each question
-# is_duplicate - the target variable, set to 1 if question1 and question2 have essentially the same meaning, and 0 otherwise.
+# ### Data fields:
+# * `id` - the id of a training set question pair
+# * `qid1, qid2` - unique ids of each question (only available in train.csv)
+# * `question1, question2` - the full text of each question
+# * `is_duplicate` - the target variable, set to 1 if question1 and question2 have essentially the same meaning, and 0 otherwise.
 # 
-# ### Link to the dataset
+# ## Approach:
+# The approach is explained in the following steps:
+# 1. Exploratory Data Analysis
+# 2. Text Analysis Steps:
+#     - Text Processing
+#         - Normalization
+#             - To lower case
+#             - Remove punctuation
+#     - Tokenization
+#         - Convert it to words
+#     - Stopwords removal
+#     - Parts of Speech Tagging
+#     - Stemming or Lemmatization - choose one of them based on requirement. Sometimes, Lemmatization can take a long time to give results.
+#     - Named Entity recognition
+# 2. Feature Creation
+#     - Create a feature that will indicate the percentage of words common between two questions
+# 3. Based on the created feature, train our model to understand the relationship between target variable and the features.
 # 
-# https://www.kaggle.com/c/quora-question-pairs/data
+# Without further ado, let's start with importing data
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np
 import pandas as pd
-import os
-import gc
 import matplotlib.pyplot as plt
 import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[2]:
-
-
-#import zipfile
-
-
-# In[3]:
+# In[ ]:
 
 
 df_train =  pd.read_csv('../input/quora-question-pairs/train.csv.zip')
-df_train.head()
+df_train.head(3)
 
 
-# In[4]:
+# In[ ]:
 
 
-df_train_copy = df_train.copy()
+df_test = pd.read_csv('../input/quora-question-pairs/test.csv.zip')
+df_test.head(3)
 
 
-# Data Fields:
-# 
-# **`id:`** simple rowID  
-# **`qid1 and qid2:`** Unique identifier for each questions  
-# **`question1 and question2:`** Question contents  
-# **`is_duplicate:`** Target Variable  
+# ## 1. Exploratory Data Analysis
 
-# In[5]:
+# In[ ]:
 
 
-# Exploratory Data Analysis
+# Number of question pairs in train and test set
+# Number of dupicate pairs in train
+# Number of unique questions in the entire dataset
 
-#Number of question pairs
-#Number of duplicate pairs
-#Number of repeating and unique questions
+print(f'shape of train:{df_train.shape}')
+print(f'shape of test:{df_test.shape}')
+print(f'number of duplicate pairs in train:{df_train.is_duplicate.sum()}')
+all_questions_train = pd.concat([df_train['question1'],df_train['question2']], axis = 0)
+print(f'toal number of questions in train:{len(all)}')
+
+
 
 qid = pd.Series(df_train['qid1'].tolist() + df_train['qid2'].tolist())
 
@@ -81,13 +90,13 @@ print(f'Number of repeating questions: {np.sum(qid.value_counts() > 1)}')
 # Plotting the histogram of number repeating questions
 
 
-# In[6]:
+# In[ ]:
 
 
 qid.value_counts()
 
 
-# In[7]:
+# In[ ]:
 
 
 # plotting the histogram
@@ -104,20 +113,20 @@ plt.ylabel('Number of Questions')
 # # Test Submission
 # 
 
-# In[8]:
+# In[ ]:
 
 
 from sklearn.metrics import log_loss
 
 
-# In[9]:
+# In[ ]:
 
 
 p = df_train['is_duplicate'].mean()
 print('predicted score:', log_loss(y_true= df_train['is_duplicate'], y_pred =  np.zeros(len(df_train['is_duplicate'])) + p))
 
 
-# In[10]:
+# In[ ]:
 
 
 # Submission
@@ -125,49 +134,49 @@ print('predicted score:', log_loss(y_true= df_train['is_duplicate'], y_pred =  n
 df_test = pd.read_csv('../input/quora-question-pairs/test.csv')
 
 
-# In[11]:
+# In[ ]:
 
 
 df_train
 
 
-# In[12]:
+# In[ ]:
 
 
 df_test.head()
 
 
-# In[13]:
+# In[ ]:
 
 
 submission = df_test.copy()
 
 
-# In[14]:
+# In[ ]:
 
 
-submission['is_duplicate'] = p
+# submission['is_duplicate'] = p
 
 
-# In[15]:
+# In[ ]:
 
 
 submission.drop(['question1','question2'],axis =1, inplace = True)
 
 
-# In[16]:
+# In[ ]:
 
 
 submission.reset_index(drop = True)
 
 
-# In[17]:
+# In[ ]:
 
 
 submission.head()
 
 
-# In[18]:
+# In[ ]:
 
 
 #submission.to_csv('baseline.csv',index = False)
@@ -178,7 +187,7 @@ submission.head()
 
 # # Text Analysis
 
-# In[19]:
+# In[ ]:
 
 
 df_train.info()
@@ -186,44 +195,44 @@ df_train.info()
 
 # # Missing Values
 
-# In[20]:
+# In[ ]:
 
 
 df_train.isna().sum()
 
 
-# In[21]:
+# In[ ]:
 
 
 df_train[df_train['question1'].isna() | df_train['question2'].isna()]
 
 
-# In[22]:
+# In[ ]:
 
 
 df_train.dropna(inplace = True)
 
 
-# In[23]:
+# In[ ]:
 
 
 df_train.info()
 
 
-# In[24]:
+# In[ ]:
 
 
 df_train['question1_len'] = df_train['question1'].apply(len)
 df_train['question2_len'] = df_train['question2'].apply(len)
 
 
-# In[25]:
+# In[ ]:
 
 
 df_train.head()
 
 
-# In[64]:
+# In[ ]:
 
 
 # Appending both question 1 and 2 together
@@ -235,7 +244,7 @@ question_train_length = pd.Series(question_train.apply(lambda x: len(str(x).spli
 question_test_length = pd.Series(question_test.apply(lambda x: len(str(x).split())))
 
 
-# In[65]:
+# In[ ]:
 
 
 #plotting the length of question 1 and 2 from the training set
@@ -255,13 +264,13 @@ dist_train = train_qs.apply(len)
 dist_test = test_qs.apply(len)
 
 
-# In[34]:
+# In[ ]:
 
 
 train_qs
 
 
-# In[30]:
+# In[ ]:
 
 
 #Histogram
@@ -277,7 +286,7 @@ plt.ylabel('Normalised frequency (Probability)');
 plt.legend()
 
 
-# In[31]:
+# In[ ]:
 
 
 len('djnfjdfj jnsndjsfn')
