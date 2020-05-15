@@ -25,7 +25,7 @@
 #     - Univariate/Bivariate - if applicable
 #     - Feature normaliation
 #     - Feature Engineering
-# 2. Text Analysis Steps:
+# 2. Text Analysis Steps [NLP]:
 #     - Text Processing
 #         - Normalization
 #             - To lower case
@@ -111,20 +111,20 @@ plt.legend()
 
 # ### Missing values
 
-# In[15]:
+# In[6]:
 
 
 print(df_train.isna().sum())
 print(df_test.isna().sum())
 
 
-# In[21]:
+# In[7]:
 
 
 df_train[df_train['question1'].isna()|df_train['question2'].isna()]
 
 
-# In[20]:
+# In[8]:
 
 
 df_test[df_test['question1'].isna()|df_test['question2'].isna()]
@@ -134,14 +134,14 @@ df_test[df_test['question1'].isna()|df_test['question2'].isna()]
 # 
 # Let's drop rows having missing values in train as they are very few. We can't drop rows in test set as we will lose test set ids and then we won't be able to submit our solution. Let's fill test set null with 'not available' for now.
 
-# In[23]:
+# In[9]:
 
 
 df_train.dropna(inplace =True)
 df_test.replace(np.nan, 'not available', inplace = True)
 
 
-# In[24]:
+# In[10]:
 
 
 # Analyzing number of words
@@ -149,11 +149,136 @@ df_train['len_1'] = df_train['question1'].apply(lambda x: len(x.split()))
 df_train['len_2'] = df_train['question2'].apply(lambda x: len(x.split()))
 
 
-# In[27]:
+# In[11]:
 
 
 df_test['len_1'] = df_test['question1'].apply(lambda x: len(x.split()))
 df_test['len_2'] = df_test['question2'].apply(lambda x: len(x.split()))
+
+
+# In[12]:
+
+
+# plot words distribution for question 1 and question 2 in train set
+plt.figure(figsize=(12,4))
+plt.hist(df_train['len_1'], label = 'question1', color = 'black', bins = 100)
+plt.hist(df_train['len_2'], label = 'question2', color = 'gray', alpha = 0.5, bins =100)
+plt.xlabel('number of words')
+plt.ylabel('number of questions')
+# plt.xlim(0,150)
+plt.legend()
+
+
+# In[13]:
+
+
+# Comparing differences in number of words between duplicate questions with that of unique questions
+plt.figure(figsize = (12,8))
+sns.boxplot(x = df_train['is_duplicate'], y = np.abs(df_train['len_1'] - df_train['len_2']) )
+plt.xlabel('is_duplicate')
+plt.ylabel('min, median, max of number of words')
+
+
+# From the plot on the left side, we can infer that the number of words are higly different if the qustions are not same. On the other hand, from the plot on right side, we can infer that the number of words in two questons which are same, are very close.
+
+# ## 2. Text Analysis [Preliminary steps of Natural Language Processing]
+#    - Text Processing
+#         - Normalization
+#             - To lower case
+#             - Remove punctuation
+#    - Tokenization
+#         - Convert it to words
+#    - Stopwords removal
+#    - Parts of Speech Tagging
+#    - Stemming or Lemmatization - choose one of them based on requirement. Sometimes, Lemmatization can take a long time to give results.
+#    - Named Entity recognition
+
+# In[14]:
+
+
+# Combine train and test questions only for cleaning purposes. After all the preprocessing, we will separate them
+# into two sets
+df_train['source'] = 'train'
+df_test['source'] = 'test'
+train_test = pd.concat([df_train, df_test], axis = 0)
+
+
+# In[15]:
+
+
+# Uncomment the following piece of code and download punkt package if not present in your system
+# import nltk
+# nltk.download()
+
+
+# In[17]:
+
+
+# Normalization
+import string
+punc = string.punctuation
+train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: ''.join(char for char in y.lower() if char not in punc) ))
+
+# Tokenization
+from nltk.tokenize import word_tokenize
+train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
+
+# Stopwords removal
+# from nltk.corpus import stopwords
+# train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
+
+
+# Stopwords removal is taking a long time given the size of our dataset. Let's skip it for now and create the feature based on our current dataset
+
+# In[24]:
+
+
+# Let's separate training and testing set
+train = train_test[train_test['source'] == 'train']
+test = train_test[train_test['source'] == 'test']
+train.drop(['source','test_id'], axis = 1, inplace = True)
+test.drop(['source','id', 'qid1','qid2','is_duplicate'], axis = 1, inplace = True)
+print(train.columns)
+print(test.columns)
+
+
+# In[ ]:
+
+
+
+
+
+# ## Text to Features (feature engineering on text data)
+# 
+
+# In[25]:
+
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+# In[26]:
+
+
+tfidf = TfidfVectorizer()
+
+
+# In[29]:
+
+
+corpus =list (train['question1'])
+
+
+# In[30]:
+
+
+vector = tfidf.fit_transform(corpus)
+
+
+# In[35]:
+
+
+# print(vector)
 
 
 # In[ ]:
