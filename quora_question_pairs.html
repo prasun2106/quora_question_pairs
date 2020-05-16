@@ -13418,7 +13418,7 @@ total number of duplicate questions in test:2763118
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.legend.Legend at 0x1d604efc988&gt;</pre>
+<pre>&lt;matplotlib.legend.Legend at 0x17880a0d6c8&gt;</pre>
 </div>
 
 </div>
@@ -13784,7 +13784,7 @@ dtype: int64
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.legend.Legend at 0x1d6053f77c8&gt;</pre>
+<pre>&lt;matplotlib.legend.Legend at 0x17880f3b788&gt;</pre>
 </div>
 
 </div>
@@ -13927,7 +13927,7 @@ dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Normalization</span>
@@ -13936,8 +13936,8 @@ dtype: int64
 <span class="n">train_test</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span> <span class="o">=</span><span class="n">train_test</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">punc</span><span class="p">)</span> <span class="p">))</span>
 
 <span class="c1"># Tokenization</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="n">train_test</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span> <span class="o">=</span><span class="n">train_test</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+<span class="c1"># from nltk.tokenize import word_tokenize</span>
+<span class="c1"># train_test[[&#39;question1&#39;,&#39;question2&#39;]] =train_test[[&#39;question1&#39;,&#39;question2&#39;]].apply(lambda x: x.apply(lambda y: word_tokenize(y)))</span>
 
 <span class="c1"># Stopwords removal</span>
 <span class="c1"># from nltk.corpus import stopwords</span>
@@ -13945,130 +13945,6 @@ dtype: int64
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-17-ad2239a20b25&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">      6</span> <span class="ansi-red-intense-fg ansi-bold"># Tokenization</span>
-<span class="ansi-green-fg">      7</span> <span class="ansi-green-intense-fg ansi-bold">from</span> nltk<span class="ansi-yellow-intense-fg ansi-bold">.</span>tokenize <span class="ansi-green-intense-fg ansi-bold">import</span> word_tokenize
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 8</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">=</span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> x<span class="ansi-yellow-intense-fg ansi-bold">:</span> x<span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> y<span class="ansi-yellow-intense-fg ansi-bold">:</span> word_tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>y<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">      9</span> 
-<span class="ansi-green-fg">     10</span> <span class="ansi-red-intense-fg ansi-bold"># Stopwords removal</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\pandas\core\frame.py</span> in <span class="ansi-cyan-fg">apply</span><span class="ansi-blue-intense-fg ansi-bold">(self, func, axis, raw, result_type, args, **kwds)</span>
-<span class="ansi-green-fg">   6876</span>             kwds<span class="ansi-yellow-intense-fg ansi-bold">=</span>kwds<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">   6877</span>         )
-<span class="ansi-green-intense-fg ansi-bold">-&gt; 6878</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> op<span class="ansi-yellow-intense-fg ansi-bold">.</span>get_result<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">   6879</span> 
-<span class="ansi-green-fg">   6880</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> applymap<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">,</span> func<span class="ansi-yellow-intense-fg ansi-bold">)</span> <span class="ansi-yellow-intense-fg ansi-bold">-&gt;</span> <span class="ansi-blue-intense-fg ansi-bold">&#34;DataFrame&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\pandas\core\apply.py</span> in <span class="ansi-cyan-fg">get_result</span><span class="ansi-blue-intense-fg ansi-bold">(self)</span>
-<span class="ansi-green-fg">    184</span>             <span class="ansi-green-intense-fg ansi-bold">return</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>apply_raw<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    185</span> 
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 186</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>apply_standard<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    187</span> 
-<span class="ansi-green-fg">    188</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> apply_empty_result<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\pandas\core\apply.py</span> in <span class="ansi-cyan-fg">apply_standard</span><span class="ansi-blue-intense-fg ansi-bold">(self)</span>
-<span class="ansi-green-fg">    294</span>             <span class="ansi-green-intense-fg ansi-bold">try</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    295</span>                 result = libreduction.compute_reduction(
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 296</span><span class="ansi-yellow-intense-fg ansi-bold">                     </span>values<span class="ansi-yellow-intense-fg ansi-bold">,</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>f<span class="ansi-yellow-intense-fg ansi-bold">,</span> axis<span class="ansi-yellow-intense-fg ansi-bold">=</span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>axis<span class="ansi-yellow-intense-fg ansi-bold">,</span> dummy<span class="ansi-yellow-intense-fg ansi-bold">=</span>dummy<span class="ansi-yellow-intense-fg ansi-bold">,</span> labels<span class="ansi-yellow-intense-fg ansi-bold">=</span>labels
-<span class="ansi-green-fg">    297</span>                 )
-<span class="ansi-green-fg">    298</span>             <span class="ansi-green-intense-fg ansi-bold">except</span> ValueError <span class="ansi-green-intense-fg ansi-bold">as</span> err<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">pandas\_libs\reduction.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.reduction.compute_reduction</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-
-<span class="ansi-green-intense-fg ansi-bold">pandas\_libs\reduction.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.reduction.Reducer.get_result</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-17-ad2239a20b25&gt;</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-intense-fg ansi-bold">(x)</span>
-<span class="ansi-green-fg">      6</span> <span class="ansi-red-intense-fg ansi-bold"># Tokenization</span>
-<span class="ansi-green-fg">      7</span> <span class="ansi-green-intense-fg ansi-bold">from</span> nltk<span class="ansi-yellow-intense-fg ansi-bold">.</span>tokenize <span class="ansi-green-intense-fg ansi-bold">import</span> word_tokenize
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 8</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">=</span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> x<span class="ansi-yellow-intense-fg ansi-bold">:</span> x<span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> y<span class="ansi-yellow-intense-fg ansi-bold">:</span> word_tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>y<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">      9</span> 
-<span class="ansi-green-fg">     10</span> <span class="ansi-red-intense-fg ansi-bold"># Stopwords removal</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\pandas\core\series.py</span> in <span class="ansi-cyan-fg">apply</span><span class="ansi-blue-intense-fg ansi-bold">(self, func, convert_dtype, args, **kwds)</span>
-<span class="ansi-green-fg">   3846</span>             <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">   3847</span>                 values <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>astype<span class="ansi-yellow-intense-fg ansi-bold">(</span>object<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>values
-<span class="ansi-green-intense-fg ansi-bold">-&gt; 3848</span><span class="ansi-yellow-intense-fg ansi-bold">                 </span>mapped <span class="ansi-yellow-intense-fg ansi-bold">=</span> lib<span class="ansi-yellow-intense-fg ansi-bold">.</span>map_infer<span class="ansi-yellow-intense-fg ansi-bold">(</span>values<span class="ansi-yellow-intense-fg ansi-bold">,</span> f<span class="ansi-yellow-intense-fg ansi-bold">,</span> convert<span class="ansi-yellow-intense-fg ansi-bold">=</span>convert_dtype<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">   3849</span> 
-<span class="ansi-green-fg">   3850</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> len<span class="ansi-yellow-intense-fg ansi-bold">(</span>mapped<span class="ansi-yellow-intense-fg ansi-bold">)</span> <span class="ansi-green-intense-fg ansi-bold">and</span> isinstance<span class="ansi-yellow-intense-fg ansi-bold">(</span>mapped<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> Series<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">pandas\_libs\lib.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.lib.map_infer</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-17-ad2239a20b25&gt;</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-intense-fg ansi-bold">(y)</span>
-<span class="ansi-green-fg">      6</span> <span class="ansi-red-intense-fg ansi-bold"># Tokenization</span>
-<span class="ansi-green-fg">      7</span> <span class="ansi-green-intense-fg ansi-bold">from</span> nltk<span class="ansi-yellow-intense-fg ansi-bold">.</span>tokenize <span class="ansi-green-intense-fg ansi-bold">import</span> word_tokenize
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 8</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">=</span>train_test<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question1&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">&#39;question2&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> x<span class="ansi-yellow-intense-fg ansi-bold">:</span> x<span class="ansi-yellow-intense-fg ansi-bold">.</span>apply<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> y<span class="ansi-yellow-intense-fg ansi-bold">:</span> word_tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>y<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">      9</span> 
-<span class="ansi-green-fg">     10</span> <span class="ansi-red-intense-fg ansi-bold"># Stopwords removal</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\nltk\tokenize\__init__.py</span> in <span class="ansi-cyan-fg">word_tokenize</span><span class="ansi-blue-intense-fg ansi-bold">(text, language, preserve_line)</span>
-<span class="ansi-green-fg">    142</span>     <span class="ansi-yellow-intense-fg ansi-bold">:</span>type preserve_line<span class="ansi-yellow-intense-fg ansi-bold">:</span> bool
-<span class="ansi-green-fg">    143</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 144</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>sentences <span class="ansi-yellow-intense-fg ansi-bold">=</span> <span class="ansi-yellow-intense-fg ansi-bold">[</span>text<span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-green-intense-fg ansi-bold">if</span> preserve_line <span class="ansi-green-intense-fg ansi-bold">else</span> sent_tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>text<span class="ansi-yellow-intense-fg ansi-bold">,</span> language<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    145</span>     return [
-<span class="ansi-green-fg">    146</span>         token <span class="ansi-green-intense-fg ansi-bold">for</span> sent <span class="ansi-green-intense-fg ansi-bold">in</span> sentences <span class="ansi-green-intense-fg ansi-bold">for</span> token <span class="ansi-green-intense-fg ansi-bold">in</span> _treebank_word_tokenizer<span class="ansi-yellow-intense-fg ansi-bold">.</span>tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>sent<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\nltk\tokenize\__init__.py</span> in <span class="ansi-cyan-fg">sent_tokenize</span><span class="ansi-blue-intense-fg ansi-bold">(text, language)</span>
-<span class="ansi-green-fg">    103</span>     <span class="ansi-yellow-intense-fg ansi-bold">:</span>param language<span class="ansi-yellow-intense-fg ansi-bold">:</span> the model name <span class="ansi-green-intense-fg ansi-bold">in</span> the Punkt corpus
-<span class="ansi-green-fg">    104</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 105</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>tokenizer <span class="ansi-yellow-intense-fg ansi-bold">=</span> load<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#39;tokenizers/punkt/{0}.pickle&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>format<span class="ansi-yellow-intense-fg ansi-bold">(</span>language<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    106</span>     <span class="ansi-green-intense-fg ansi-bold">return</span> tokenizer<span class="ansi-yellow-intense-fg ansi-bold">.</span>tokenize<span class="ansi-yellow-intense-fg ansi-bold">(</span>text<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    107</span> 
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\nltk\data.py</span> in <span class="ansi-cyan-fg">load</span><span class="ansi-blue-intense-fg ansi-bold">(resource_url, format, cache, verbose, logic_parser, fstruct_reader, encoding)</span>
-<span class="ansi-green-fg">    833</span>     <span class="ansi-yellow-intense-fg ansi-bold">:</span>param encoding<span class="ansi-yellow-intense-fg ansi-bold">:</span> the encoding of the input<span class="ansi-yellow-intense-fg ansi-bold">;</span> only used <span class="ansi-green-intense-fg ansi-bold">for</span> text formats<span class="ansi-yellow-intense-fg ansi-bold">.</span>
-<span class="ansi-green-fg">    834</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 835</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>resource_url <span class="ansi-yellow-intense-fg ansi-bold">=</span> normalize_resource_url<span class="ansi-yellow-intense-fg ansi-bold">(</span>resource_url<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    836</span>     resource_url <span class="ansi-yellow-intense-fg ansi-bold">=</span> add_py3_data<span class="ansi-yellow-intense-fg ansi-bold">(</span>resource_url<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    837</span> 
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\nltk\data.py</span> in <span class="ansi-cyan-fg">normalize_resource_url</span><span class="ansi-blue-intense-fg ansi-bold">(resource_url)</span>
-<span class="ansi-green-fg">    213</span>     <span class="ansi-green-intense-fg ansi-bold">elif</span> protocol <span class="ansi-yellow-intense-fg ansi-bold">==</span> <span class="ansi-blue-intense-fg ansi-bold">&#39;nltk&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    214</span>         protocol <span class="ansi-yellow-intense-fg ansi-bold">=</span> <span class="ansi-blue-intense-fg ansi-bold">&#39;nltk:&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 215</span><span class="ansi-yellow-intense-fg ansi-bold">         </span>name <span class="ansi-yellow-intense-fg ansi-bold">=</span> normalize_resource_name<span class="ansi-yellow-intense-fg ansi-bold">(</span>name<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-green-intense-fg ansi-bold">True</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    216</span>     <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    217</span>         <span class="ansi-red-intense-fg ansi-bold"># handled by urllib</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\site-packages\nltk\data.py</span> in <span class="ansi-cyan-fg">normalize_resource_name</span><span class="ansi-blue-intense-fg ansi-bold">(resource_name, allow_relative, relative_path)</span>
-<span class="ansi-green-fg">    255</span>         resource_name <span class="ansi-yellow-intense-fg ansi-bold">=</span> re<span class="ansi-yellow-intense-fg ansi-bold">.</span>sub<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">r&#39;^/+&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-blue-intense-fg ansi-bold">&#39;/&#39;</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> resource_name<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    256</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> allow_relative<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 257</span><span class="ansi-yellow-intense-fg ansi-bold">         </span>resource_name <span class="ansi-yellow-intense-fg ansi-bold">=</span> os<span class="ansi-yellow-intense-fg ansi-bold">.</span>path<span class="ansi-yellow-intense-fg ansi-bold">.</span>normpath<span class="ansi-yellow-intense-fg ansi-bold">(</span>resource_name<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    258</span>     <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    259</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> relative_path <span class="ansi-green-intense-fg ansi-bold">is</span> <span class="ansi-green-intense-fg ansi-bold">None</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\ntpath.py</span> in <span class="ansi-cyan-fg">normpath</span><span class="ansi-blue-intense-fg ansi-bold">(path)</span>
-<span class="ansi-green-fg">    470</span>         <span class="ansi-green-intense-fg ansi-bold">return</span> path
-<span class="ansi-green-fg">    471</span>     path <span class="ansi-yellow-intense-fg ansi-bold">=</span> path<span class="ansi-yellow-intense-fg ansi-bold">.</span>replace<span class="ansi-yellow-intense-fg ansi-bold">(</span>altsep<span class="ansi-yellow-intense-fg ansi-bold">,</span> sep<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 472</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>prefix<span class="ansi-yellow-intense-fg ansi-bold">,</span> path <span class="ansi-yellow-intense-fg ansi-bold">=</span> splitdrive<span class="ansi-yellow-intense-fg ansi-bold">(</span>path<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    473</span> 
-<span class="ansi-green-fg">    474</span>     <span class="ansi-red-intense-fg ansi-bold"># collapse initial backslashes</span>
-
-<span class="ansi-green-intense-fg ansi-bold">~\Anaconda3\lib\ntpath.py</span> in <span class="ansi-cyan-fg">splitdrive</span><span class="ansi-blue-intense-fg ansi-bold">(p)</span>
-<span class="ansi-green-fg">    166</span>                 index2 <span class="ansi-yellow-intense-fg ansi-bold">=</span> len<span class="ansi-yellow-intense-fg ansi-bold">(</span>p<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    167</span>             <span class="ansi-green-intense-fg ansi-bold">return</span> p<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>index2<span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> p<span class="ansi-yellow-intense-fg ansi-bold">[</span>index2<span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-yellow-intense-fg ansi-bold">]</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 168</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">if</span> normp<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">1</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-cyan-intense-fg ansi-bold">2</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">==</span> colon<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    169</span>             <span class="ansi-green-intense-fg ansi-bold">return</span> p<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-cyan-intense-fg ansi-bold">2</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> p<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">2</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-yellow-intense-fg ansi-bold">]</span>
-<span class="ansi-green-fg">    170</span>     <span class="ansi-green-intense-fg ansi-bold">return</span> p<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> p
-
-<span class="ansi-red-intense-fg ansi-bold">KeyboardInterrupt</span>: </pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -14083,7 +13959,7 @@ dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s separate training and testing set</span>
@@ -14108,6 +13984,21 @@ dtype: int64
     <div class="prompt"></div>
 
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\pandas\core\frame.py:3997: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  errors=errors,
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Index([&#39;id&#39;, &#39;qid1&#39;, &#39;qid2&#39;, &#39;question1&#39;, &#39;question2&#39;, &#39;is_duplicate&#39;, &#39;len_1&#39;,
        &#39;len_2&#39;],
@@ -14117,6 +14008,523 @@ Index([&#39;question1&#39;, &#39;question2&#39;, &#39;len_1&#39;, &#39;len_2&#39
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[47]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>qid1</th>
+      <th>qid2</th>
+      <th>question1</th>
+      <th>question2</th>
+      <th>is_duplicate</th>
+      <th>len_1</th>
+      <th>len_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>what is the step by step guide to invest in sh...</td>
+      <td>what is the step by step guide to invest in sh...</td>
+      <td>0.0</td>
+      <td>14</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>what is the story of kohinoor kohinoor diamond</td>
+      <td>what would happen if the indian government sto...</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>how can i increase the speed of my internet co...</td>
+      <td>how can internet speed be increased by hacking...</td>
+      <td>0.0</td>
+      <td>14</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Text-to-Features-(feature-engineering-on-text-data)">Text to Features (feature engineering on text data)<a class="anchor-link" href="#Text-to-Features-(feature-engineering-on-text-data)">&#182;</a></h2><ol>
+<li>Initial Feature Analysis</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="n">train</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span> <span class="o">=</span><span class="n">train</span><span class="p">[[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span><span class="s1">&#39;question2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\pandas\core\frame.py:2963: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  self[k1] = value[k2]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+
+<span class="c1"># please note that converting stopwords to set is an important step as it increases efficiency. Otherwise it would take</span>
+<span class="c1"># forever to remove the stopwords</span>
+<span class="n">stops</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+
+<span class="c1"># finding number of common words between question 1 and question 2 before removing stopwords</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;common_words_including_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">])),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">raw</span>  <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1">#removing stopwords</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span> <span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">y</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">])</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span> <span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">y</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">])</span>
+
+<span class="c1"># finding number of common words between question 1 and question 2 after removing stpwords</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;common_words_excluding_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">])),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">raw</span>  <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:8: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  
+C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:10: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  # Remove the CWD from sys.path while we load stuff.
+C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  # This is added back by InteractiveShellApp.init_path()
+C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:14: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;len_1_without_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;len_2_without_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;question2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  &#34;&#34;&#34;Entry point for launching an IPython kernel.
+C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># finding ratio of common words</span>
+
+<span class="c1"># train_valid = train[(train[&#39;common_words_excluding_stopwords&#39;]!=0) &amp; (train[&#39;common_words_including_stopwords&#39;]!=0)]</span>
+
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;percent_with_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;common_words_including_stopwords&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="mi">2</span><span class="o">*</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;common_words_including_stopwords&#39;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;len_1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;len_2&#39;</span><span class="p">])</span> <span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span>  <span class="kc">True</span><span class="p">)</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">&#39;percent_without_stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;common_words_excluding_stopwords&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="mi">2</span><span class="o">*</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;common_words_excluding_stopwords&#39;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;len_1_without_stopwords&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;len_2_without_stopwords&#39;</span><span class="p">])</span> <span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span>  <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:5: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  &#34;&#34;&#34;
+C:\Users\hp\Anaconda3\lib\site-packages\ipykernel_launcher.py:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I believe that number of common words in a pair of questions should be highly correlated with 'is_duplicate' columns. If this is the case, then we will use this to predict whether two questions are duplicates and will also look at accuracy.</p>
+<h4 id="Correlation-between-a-continuous-and-categorical-variable:">Correlation between a continuous and categorical variable:<a class="anchor-link" href="#Correlation-between-a-continuous-and-categorical-variable:">&#182;</a></h4><p>Usually, if we have a categorical variable with only two classe, we can use df.corr() to get the correlation between categorical and continuous variables</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="p">[[</span><span class="s1">&#39;percent_with_stopwords&#39;</span><span class="p">,</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[107]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>percent_with_stopwords</th>
+      <th>is_duplicate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>percent_with_stopwords</th>
+      <td>1.000000</td>
+      <td>0.372799</td>
+    </tr>
+    <tr>
+      <th>is_duplicate</th>
+      <td>0.372799</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="p">[[</span><span class="s1">&#39;percent_without_stopwords&#39;</span><span class="p">,</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[108]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>percent_without_stopwords</th>
+      <th>is_duplicate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>percent_without_stopwords</th>
+      <td>1.000000</td>
+      <td>0.426174</td>
+    </tr>
+    <tr>
+      <th>is_duplicate</th>
+      <td>0.426174</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;percent_without_stopwords&#39;</span><span class="p">],</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span><span class="s1">&#39;not duplicate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;percent_without_stopwords&#39;</span><span class="p">],</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span><span class="s1">&#39;duplicate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;word match percent&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;distribution&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[114]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Text(0, 0.5, &#39;distribution&#39;)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA24AAAE9CAYAAABz1DEXAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAgAElEQVR4nO3de5hlZX0n+u9PGm25CBHIjIhOoxOR0EDTNImAclU03lBChhhUEIXDGHVMvATjMQHm8Rl0jJlojIYx2o4BJTReEC+RRAgwolBNt8glHD3S0T5wTlpQgkAr0O/5Y+9ui77V7u5aVauqP5/nqaf2Xnut9f5q13qq6lvvu963WmsBAACgvx433QUAAACweYIbAABAzwluAAAAPSe4AQAA9JzgBgAA0HOCGwAAQM/Nme4Cxttzzz3bvHnzprsMAACAabF06dIft9b2Wn97r4LbvHnzMjY2Nt1lAAAATIuq+peNbTdUEgAAoOcENwAAgJ4T3AAAAHquV/e4AQAAk+/hhx/OypUrs3r16ukuhaG5c+dmn332yY477jjS/oIbAADMcitXrsyuu+6aefPmpaqmu5ztXmst99xzT1auXJl99913pGMMlQQAgFlu9erV2WOPPYS2nqiq7LHHHlvUAyq4AQDAdkBo65ct/X4IbgAAQO8sXrw4d91114T7rVixIvPnz9/qdk4//fQsWbIkSfKGN7wht9122xafY/ny5fnKV76y1TWMwj1uAACwnZl3zpcn9XwrLnjJpJ4vGQS3+fPnZ++99570c2/Kxz/+8a06bvny5RkbG8uLX/ziSa7ol/S4AQAAnVqxYkX233//nHnmmTnggANywgkn5KGHHkoyCD3Pec5zctBBB+WVr3xlfvKTn2TJkiUZGxvLqaeemgULFqzbd62lS5fm4IMPzuGHH56PfOQj67YvXrw4b3rTm9Y9f+lLX5qrr746SbLLLrvkbW97WxYuXJjjjz8+q1at2qDOY445JmNjY0mSr33ta1m4cGEOPvjgHH/88UmSG264IUcccUQOOeSQHHHEEbnjjjvyi1/8In/yJ3+SSy65JAsWLMgll1ySBx54IGeccUYOO+ywHHLIIfniF7+4ze+h4AYAAHTue9/7Xn7/938/t956a3bfffdcdtllSZLXvva1ed/73pebb745Bx54YM4777ycfPLJWbRoUS666KIsX748T3ziEx9zrte97nX50Ic+lOuvv37k9h944IEsXLgwN910U44++uicd955m9x31apVOfPMM3PZZZflO9/5Ti699NIkybOf/excc801WbZsWc4///z88R//cR7/+Mfn/PPPzymnnJLly5fnlFNOyXvf+94cd9xxufHGG3PVVVflHe94Rx544IGteNd+yVDJEWxLV3IX3cYAADDT7LvvvlmwYEGS5NBDD82KFSty33335ac//WmOPvroJMlpp52W3/md39nsedY/5jWveU2++tWvTtj+4x73uJxyyilJkle/+tU56aSTNrnvt771rRx11FHrpup/8pOfvK7t0047Ld/73vdSVXn44Yc3evzXv/71XH755fnABz6QZDCr5w9/+MPsv//+E9a5KYIbAADQuSc84QnrHu+www4bDH8cVWttkzMyzpkzJ2vWrFn3fHPT7W9uVsdNtfGe97wnxx57bD7/+c9nxYoVOeaYYzZ5/GWXXZb99ttvk21sKUMlAQCAabHbbrvlV37lV3LttdcmST796U+v60nbddddc//9929wzO67757ddtst1113XZLkoosuWvfavHnzsnz58qxZsyY/+tGPcsMNN6x7bc2aNetmj7z44ovz3Oc+d5N1HX744fmnf/qn3HnnnUmSe++9N8mgx+2pT31qksH9dGutX+sLX/jCfPjDH05rLUmybNmyEd+RTdPjBgAATJtPfepTOfvss/Pggw/mGc94Rj75yU8mGUzTf/bZZ+eJT3xirr/++sfc5/bJT34yZ5xxRnbaaae88IUvXLf9yCOPzL777psDDzww8+fPz8KFC9e9tvPOO+fWW2/NoYcemt122y2XXHLJJmvaa6+9cuGFF+akk07KmjVr8qu/+qu58sor8853vjOnnXZaPvjBD+a4445bt/+xxx6bCy64IAsWLMi73vWuvOc978lb3/rWHHTQQWmtZd68ebniiiu26X2qtSmwDxYtWtTWzuLSJ+5xAwBgJrv99tu36f6q2WCXXXbJz372s+ku4zE29n2pqqWttUXr72uoJAAAQM8JbgAAwKzXt962LSW4AQAA9JzgBgAA0HOCGwAAQM8JbgAAAD0nuAEAAFPq3HPPzQc+8IGtOnaXXXZJktx11105+eSTt+ocixcvzl133bVVx04XC3ADAMD25tzdJvl8903u+Uaw9957Z8mSJVt17OLFizN//vzsvffek1xVd/S4AQAAnXvve9+b/fbbL89//vNzxx13JEmOOeaYjI2NJUl+/OMfZ968eUkGwerEE0/Mi170ouy3334577zzNjjfihUrMn/+/CTJo48+mre//e058MADc9BBB+XDH/5wkuT888/PYYcdlvnz5+ess85Kay1LlizJ2NhYTj311CxYsCAPPfRQli5dmqOPPjqHHnpoXvjCF+buu++egndkywhuAABAp5YuXZrPfvazWbZsWT73uc/lxhtvnPCYG264IRdddFGWL1+eSy+9dF3A25gLL7wwd955Z5YtW5abb745p556apLkTW96U2688cbccssteeihh3LFFVfk5JNPzqJFi9ade86cOXnzm9+cJUuWZOnSpTnjjDPy7ne/e9K+9sliqCQAANCpa6+9Nq985Suz0047JUle/vKXT3jMC17wguyxxx5JkpNOOinXXXddFi1atNF9/+Ef/iFnn3125swZxJsnP/nJSZKrrroq73//+/Pggw/m3nvvzQEHHJCXvexljzn2jjvuyC233JIXvOAFSQa9d095ylO27gvtkOAGAAB0rqo22DZnzpysWbMmSbJ69erN7r+x49dqrW3w+urVq/PGN74xY2NjedrTnpZzzz13gzbWHnvAAQfk+uuvH/lrmQ6GSgIAAJ066qij8vnPfz4PPfRQ7r///nzpS19KksybNy9Lly5Nkg0mGrnyyitz77335qGHHsoXvvCFHHnkkZs8/wknnJCPfexjeeSRR5Ik995777qQtueee+ZnP/vZY86/66675v7770+S7Lffflm1atW64Pbwww/n1ltvnaSvfPJ0Gtyq6g+q6taquqWqPlNVc7tsDwAA6J+FCxfmlFNOyYIFC/Lbv/3bed7znpckefvb356PfvSjOeKII/LjH//4Mcc897nPzWte85p1x2xqmGSSvOENb8jTn/70HHTQQTn44INz8cUXZ/fdd8+ZZ56ZAw88MK94xSty2GGHrdv/9NNPz9lnn50FCxbk0UcfzZIlS/JHf/RHOfjgg7NgwYJ885vf7OaN2AbVWuvmxFVPTXJdkl9vrT1UVX+X5CuttcWbOmbRokVtczcdTpd553x5q49dccFLJrESAADYcrfffnv233//6S5jZIsXL87Y2Fj+8i//crpL6dTGvi9VtbS1tkFK7Xqo5JwkT6yqOUl2SjKzVrkDAADogc6CW2vt/0nygSQ/THJ3kvtaa19ff7+qOquqxqpqbNWqVV2VAwAAzBCnn376rO9t21KdBbeq+pUkJybZN8neSXauqlevv19r7cLW2qLW2qK99tqrq3IAAABmrC6HSj4/yZ2ttVWttYeTfC7JER22BwAAbEJXc1uwdbb0+9FlcPthkudU1U41WFTh+CS3d9geAACwEXPnzs0999wjvPVEay333HNP5s4dfdL9zhbgbq19u6qWJLkpySNJliW5sKv2AACAjdtnn32ycuXKmFOiP+bOnZt99tln5P07C25J0lr70yR/2mUbAADA5u24447Zd999p7sMtkHXywEAAACwjQQ3AACAnhPcAAAAek5wAwAA6DnBDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOg5wQ0AAKDnBDcAAICeE9wAAAB6TnADAADoOcENAACg5wQ3AACAnhPcAAAAek5wAwAA6DnBDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOg5wQ0AAKDn5kx3AQAAU+rc3bbh2Psmrw6ALaDHDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOg5wQ0AAKDnBDcAAICeE9wAAAB6TnADAADoOcENAACg5wQ3AACAnhPcAAAAek5wAwAA6DnBDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOg5wQ0AAKDnBDcAAICeE9wAAAB6TnADAADoOcENAACg5wQ3AACAnhPcAAAAek5wAwAA6DnBDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOi5ToNbVe1eVUuq6p+r6vaqOrzL9gAAAGajOR2f/y+SfK21dnJVPT7JTh23BwAAMOt0Ftyq6klJjkpyepK01n6R5BddtQcAADBbdTlU8hlJViX5ZFUtq6qPV9XOHbYHAAAwK3UZ3OYkWZjko621Q5I8kOSc9XeqqrOqaqyqxlatWtVhOQAAADNTl8FtZZKVrbVvD58vySDIPUZr7cLW2qLW2qK99tqrw3IAAABmps6CW2vt/03yo6rab7jp+CS3ddUeAADAbNX1rJJvTnLRcEbJHyR5XcftAQAAzDqdBrfW2vIki7psAwAAYLbrdAFuAAAAtp3gBgAA0HOCGwAAQM8JbgAAAD0nuAEAAPSc4AYAANBzghsAAEDPCW4AAAA9J7gBAAD0nOAGAADQc4IbAABAz80ZdceqemqS/zD+mNbaNV0UBQAAwC+NFNyq6n1JTklyW5JHh5tbEsENAACgY6P2uL0iyX6ttZ93WQwAAAAbGvUetx8k2bHLQgAAANi4UXvcHkyyvKr+Mcm6XrfW2ls6qQoAAIB1Rg1ulw8/AAAAmGIjBbfW2qeq6vFJnjXcdEdr7eHuygIAAGCtUWeVPCbJp5KsSFJJnlZVp1kOAAAAoHujDpX8syQntNbuSJKqelaSzyQ5tKvCAAAAGBh1Vskd14a2JGmt/V8xyyQAAMCUGLXHbayq/ibJp4fPT02ytJuSAAAAGG/U4Pafk/x+krdkcI/bNUn+qquiAAAA+KVRZ5X8eZIPDj8AAACYQpsNblX1d621/1RV303S1n+9tXZQZ5UBAACQZOIet/8y/PzSrgsBAABg4zY7q2Rr7e7hwze21v5l/EeSN3ZfHgAAAKMuB/CCjWz7rcksBAAAgI2b6B63/5xBz9ozq+rmcS/tmuR/d1kYAAAAAxPd43Zxkq8m+W9Jzhm3/f7W2r2dVQUAAMA6mw1urbX7ktxXVX+03ku7VNUurbUfdlcaAAAAyegLcH85g+UAKsncJPsmuSPJAR3VBQAAsGnn7raNx983OXVMkVEX4D5w/POqWpjk/+ikIgAAAB5j1B63x2it3VRVh012MQAwrbblv7cz7D+3AMwsIwW3qvrDcU8fl2RhklWdVAQAAMBjjNrjtuu4x49kcM/bZZNfDgAAAOsb9R6385Kkqp40eNru77QqAAAA1nncKDtV1aKq+m6Sm5N8t6q+U1WHdlsaAAAAyehDJT+R5I2ttWuTpKqem+STSQ7qqjAAAAAGRupxS3L/2tCWJK2165IYLgkAADAFNtvjNlyvLUluqKq/TvKZDBbiPiXJ1d2WBgAAQDLxUMk/W+/5n4573Ca5FgAAADZis8GttXbsVBUCAADAxk00VPLVrbW/XW8B7nVaax/spiwAAADWmmio5M7Dz7tudi8AAAA6M9FQyb+uqh2S/Ftr7c+nqCYAAADGmXA5gNbao0lePgW1AAAAsBGjLsD9zar6yySXJHlg7cbW2k2dVAUAAMA6owa3I4afzx+3rSU5bnLLAQAAYH2jBrfXt9Z+MH5DVT2jg3oAAABYz4T3uA0t2ci2S0c5sKp2qKplVXXF6GUBAACw1kTruD07yQFJdquqk8a99KQkc0ds478kuX14DAAAAFtooqGS+yV5aZLdk7xs3Pb7k5w50cmrap8kL0ny3iQbXcQbAACAzZtoHbcvJvliVR3eWrt+K87/P5K8MxbwBgAA2Gqj3uP2yqp6UlXtWFX/WFU/rqpXb+6Aqnppkn9trS2dYL+zqmqsqsZWrVo1at0AAADbjVGD2wmttX/LYNjkyiTPSvKOCY45MsnLq2pFks8mOa6q/nb9nVprF7bWFrXWFu21116jVw4AALCdGDW47Tj8/OIkn2mt3TvRAa21d7XW9mmtzUvyu0m+0VrbbC8dAAAAGxp1HbcvVdU/J3koyRuraq8kq7srCwAAgLVG6nFrrZ2T5PAki1prDyd5IMmJozbSWru6tfbSrSsRAABg+zbROm7Htda+MX4Nt6oav8vnuioMAACAgYmGSh6V5BsZrOHWktR6nwU3AACAjk0U3O6vqj9Mckt+GdgyfAwAAMAUmCi47TL8vF+Sw5J8MYPw9rIk13RYFwAAAEObDW6ttfOSpKq+nmRha+3+4fNzk1zaeXUAAACMvI7b05P8YtzzXySZN+nVAAAAsIFR13H7dJIbqurzGdzf9sokn+qsKgAAANYZKbi11t5bVV9N8rzhpte11pZ1VxYAAABrjdrjltbaTUlu6rAWAAAANmLUe9wAAACYJoIbAABAzwluAAAAPSe4AQAA9JzgBgAA0HMjzyoJAABT5tzdtvH4+yanDugJPW4AAAA9J7gBAAD0nOAGAADQc4IbAABAzwluAAAAPSe4AQAA9JzlAAAAZrttmVrftPrQC3rcAAAAek5wAwAA6DlDJQFgpjMMDmDW0+MGAADQc3rcAGYzPTEAMCvocQMAAOg5wQ0AAKDnBDcAAICeE9wAAAB6TnADAADoOcENAACg5ywHAABsHctNAEwZPW4AAAA9J7gBAAD0nOAGAADQc4IbAABAzwluAAAAPSe4AQAA9JzgBgAA0HPWcQMAgPGsUUgP6XEDAADoOcENAACg5wQ3AACAnhPcAAAAek5wAwAA6DnBDQAAoOcENwAAgJ4T3AAAAHrOAtwATL5tWbw2sYAtAKyns+BWVU9L8r+S/Pska5Jc2Fr7i67aA5jIvHO+vNXHrrjgJZNYCQDAlumyx+2RJG9rrd1UVbsmWVpVV7bWbuuwTQAAgFmns3vcWmt3t9ZuGj6+P8ntSZ7aVXsAAACz1ZRMTlJV85IckuTbG3ntrKoaq6qxVatWTUU5AAAAM0rnwa2qdklyWZK3ttb+bf3XW2sXttYWtdYW7bXXXl2XAwAAMON0OqtkVe2YQWi7qLX2uS7bApjIirm/tw1Hm+UQAJg+nfW4VVUl+Zskt7fWPthVOwAAALNdl0Mlj0zymiTHVdXy4ceLO2wPAABgVupsqGRr7bok1dX5AQAAthdTMqskAAAAW09wAwAA6LlOZ5UEAEZ07m7TXQEAPabHDQAAoOf0uAFTbt45X97qY1dc8JJJrAQAYGbQ4wYAANBzghsAAEDPGSoJM5ghhwAA2wc9bgAAAD0nuAEAAPScoZKwnTLMEgBg5hDcAKaAoAwAbAtDJQEAAHpOcAMAAOg5wQ0AAKDn3OMG02xb7n0CAGD7oMcNAACg5wQ3AACAnjNUEmAKrJj7e9tw9H2TVgcAPXbubttwrN8Vs50eNwAAgJ4T3AAAAHrOUElgRtmWWThXzJ3EQgCm0rYMoQNmBT1uAAAAPafHDSaBtdgAAOiS4AZA/5hZDQAew1BJAACAntPjxqyxTZNWXPCSSawEAAAmlx43AACAnhPcAAAAes5QSYhZIQEA6Dc9bgAAAD0nuAEAAPScoZLAFjO0FABgagluTDrT8sMssS2LYAMAk0pwo1f05AAAwIbc4wYAANBzetwAYDIYWgpAh/S4AQAA9JzgBgAA0HOGSgIAMPsYvswsI7gBAMBMt61B9dz7JqcOOmOoJAAAQM/pcWMD1lIDANbZlp4cvTgwaQQ3YMqtmPt7W33svNUXT2IlAFPIPVfbhW35B/iKuZNYCLOO4AYwgm3tifbLGADYFoIbADD1TKQAsEUEN4ARbMvwTgCAbSW4ATOKAAWTzH1XQGISmhnAcgAAAAA9p8dtljKlPwAAzB6dBreqelGSv0iyQ5KPt9Yu6LI9YHSm5AcAmDk6C25VtUOSjyR5QZKVSW6sqstba7d11SZsb9zvtZ1wDxLAjOF3M13pssftN5J8v7X2gySpqs8mOTGJ4AbjzMQf8DOxZgCgIyY2mRJdBrenJvnRuOcrk/xmh+11Ztv+SN36i9F9agBbQQ/l9mG6vs+ury3j/WIirpGRdRncaiPb2gY7VZ2V5Kzh059V1R0d1rS19kzy46068ryNvQ3wS7Ut1xdMzPVFl1xfdMn1RbfOq75eY/9hYxu7DG4rkzxt3PN9kty1/k6ttQuTXNhhHdusqsZaa4umuw5mJ9cXXXJ90SXXF11yfdG1mXaNdbmO241Jfq2q9q2qxyf53SSXd9geAADArNRZj1tr7ZGqelOSv89gOYBPtNZu7ao9AACA2arTddxaa19J8pUu25givR7KyYzn+qJLri+65PqiS64vujajrrFqbYP5QgAAAOiRLu9xAwAAYBIIbkNV9aKquqOqvl9V52zk9SdU1SXD179dVfOmvkpmqhGurz+sqtuq6uaq+seq2ug0sLApE11j4/Y7uapaVc2YWbSYfqNcX1X1n4Y/x26tqounukZmrhF+Rz69qq6qqmXD35Mvno46mZmq6hNV9a9VdcsmXq+q+tDw+ru5qhZOdY2jEtySVNUOST6S5LeS/HqSV1XVr6+32+uT/KS19h+T/HmS901tlcxUI15fy5Isaq0dlGRJkvdPbZXMZCNeY6mqXZO8Jcm3p7ZCZrJRrq+q+rUk70pyZGvtgCRvnfJCmZFG/Pn1fyb5u9baIRnMUv5XU1slM9ziJC/azOu/leTXhh9nJfnoFNS0VQS3gd9I8v3W2g9aa79I8tkkJ663z4lJPjV8vCTJ8VVldW1GMeH11Vq7qrX24PDptzJY9xBGNcrPsCT5rxn8U2D1VBbHjDfK9XVmko+01n6SJK21f53iGpm5Rrm+WpInDR/vlo2sCwyb0lq7Jsm9m9nlxCT/qw18K8nuVfWUqaluywhuA09N8qNxz1cOt210n9baI0nuS7LHlFTHTDfK9TXe65N8tdOKmG0mvMaq6pAkT2utXTGVhTErjPIz7FlJnlVV/7uqvlVVm/vvNow3yvV1bpJXV9XKDGYrf/PUlMZ2Ykv/Tps2nS4HMINsrOds/ek2R9kHNmbka6eqXp1kUZKjO62I2Waz11hVPS6DId6nT1VBzCqj/Aybk8Ewo2MyGDFwbVXNb639tOPamPlGub5elWRxa+3PqurwJJ8eXl9rui+P7cCM+Rtfj9vAyiRPG/d8n2zYDb9un6qak0FX/ea6XWGtUa6vVNXzk7w7yctbaz+fotqYHSa6xnZNMj/J1VW1IslzklxughJGNOrvyC+21h5urd2Z5I4MghxMZJTr6/VJ/i5JWmvXJ5mbZM8pqY7twUh/p/WB4DZwY5Jfq6p9q+rxGdz4evl6+1ye5LTh45OTfKNZBI/RTHh9DYex/XUGoc29IWypzV5jrbX7Wmt7ttbmtdbmZXAf5ctba2PTUy4zzCi/I7+Q5Ngkqao9Mxg6+YMprZKZapTr64dJjk+Sqto/g+C2akqrZDa7PMlrh7NLPifJfa21u6e7qI0xVDKDe9aq6k1J/j7JDkk+0Vq7tarOTzLWWrs8yd9k0DX//Qx62n53+ipmJhnx+vrvSXZJculwzpsfttZePm1FM6OMeI3BVhnx+vr7JCdU1W1JHk3yjtbaPdNXNTPFiNfX25L8z6r6gwyGsJ3un+eMqqo+k8Ew7j2H90n+aZIdk6S19rEM7pt8cZLvJ3kwyeump9KJleseAACg3wyVBAAA6DnBDQAAoOcENwAAgJ4T3AAAAHpOcAMAAOg5wQ2A3qqqY6rqig7O+4qq+vXpaLsrVTWvqn5vuusAoBuCGwC9UVU7TFFTr0iy2eA2FapqMtdTnZdEcAOYpQQ3ALZZVb2zqt4yfPznVfWN4ePjq+pvh49fVVXfrapbqup94479WVWdX1XfTnJ4Vb2oqv65qq5LctIm2ju9qr5QVV+qqjur6k1V9YdVtayqvlVVTx7ud2ZV3VhV36mqy6pqp6o6IsnLk/z3qlpeVc+sqv9YVf8w3O+mqnrmsKldqmrJsJ6Lqqo2UsvVVfU/quqbw6/tN4bbd66qTwzbX1ZVJ46r/dKq+lKSr497/747bP+C4bZnVtXXqmppVV1bVc8ebl9cVR8atveDqjp5WMoFSZ43/Jr+YOu/mwD0keAGwGS4Jsnzho8XZRB4dkzy3CTXVtXeSd6X5LgkC5IcVlWvGO6/c5JbWmu/mWQsyf9M8rLh+f79Ztqcn0EP028keW+SB1trhyS5Pslrh/t8rrV2WGvt4CS3J3l9a+2bSS5P8o7W2oLW2v+d5KIkHxnud0SSu4fHH5LkrRn0zj0jyZGbqGXn1toRSd6Y5BPDbe9O8o3W2mFJjs0gKO48fO3wJKe11o6rqt/KoAfwN4ftv3+4z4VJ3txaOzTJ25P81bj2njJ8b1+aQWBLknOSXDv8mv58M+8bADOQ4AbAZFia5NCq2jXJzzMIT4syCF/XJjksydWttVWttUcyCEpHDY99NMllw8fPTnJna+17rbWW5G830+ZVrbX7W2urktyX5EvD7d/NYNhgkswf9lZ9N8mpSQ5Y/yTDmp/aWvt8krTWVrfWHhy+fENrbWVrbU2S5ePOu77PDI+9JsmTqmr3JCckOaeqlie5OsncJE8f7n9la+3e4ePnJ/nk2jZba/dW1S4ZBMhLh8f/dQZhba0vtNbWtNZuS/LvNvMeATBLTObYegC2U621h6tqRZLXJflmkpsz6GV6ZgY9Xc/azOGrW2uPjj/diM3+fNzjNeOer8kvf78tTvKK1tp3qur0JMds5DwbDH/cRBuPZtO/N9evuQ3P+9uttTse01jVbyZ5YL321z/+cUl+2lpbMEJdm6sfgFlCjxsAk+WaDIb0XZNBL9vZSZYPe86+neToqtpzOAHJq5L800bO8c9J9h13j9mrtrGmXZPcPRy2eTjAy1oAAAEySURBVOq47fcPX0tr7d+SrFw7dLOqnlBVO21hO6cMj31ukvtaa/cl+fskb157X1xVHbKJY7+e5Iy1bVbVk4c13VlVvzPcVlV18AQ1rPuaAJh9BDcAJsu1GQznu7619v8lWT3cltba3UneleSqJN9JclNr7Yvrn6C1tjrJWUm+PJyc5F+2sab3ZBAar8wgFK712STvGE4a8swkr0nylqq6OYMew83dW7cxP6mqbyb5WJLXD7f91yQ7Jrm5qm4ZPt9Aa+1rGdxzNzYcFvn24UunJnl9VX0nya1JTpyghpuTPDKc4MTkJACzTA3+EQoAbI2qujrJ21trY9NdCwCzlx43AACAntPjBgAA0HN63AAAAHpOcAMAAOg5wQ0AAKDnBDcAAICeE9wAAAB6TnADAADouf8frf6kadEjD7kAAAAASUVORK5CYII=
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Bingo!">Bingo!<a class="anchor-link" href="#Bingo!">&#182;</a></h3><p>As expected, duplicate pairs have more</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -14134,71 +14542,12 @@ Index([&#39;question1&#39;, &#39;question2&#39;, &#39;len_1&#39;, &#39;len_2&#39
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Text-to-Features-(feature-engineering-on-text-data)">Text to Features (feature engineering on text data)<a class="anchor-link" href="#Text-to-Features-(feature-engineering-on-text-data)">&#182;</a></h2>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corpus</span> <span class="o">=</span><span class="nb">list</span> <span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vector</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># print(vector)</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>

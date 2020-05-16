@@ -211,7 +211,7 @@ train_test = pd.concat([df_train, df_test], axis = 0)
 # nltk.download()
 
 
-# In[17]:
+# In[20]:
 
 
 # Normalization
@@ -220,8 +220,8 @@ punc = string.punctuation
 train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: ''.join(char for char in y.lower() if char not in punc) ))
 
 # Tokenization
-from nltk.tokenize import word_tokenize
-train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
+# from nltk.tokenize import word_tokenize
+# train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
 
 # Stopwords removal
 # from nltk.corpus import stopwords
@@ -230,7 +230,7 @@ train_test[['question1','question2']] =train_test[['question1','question2']].app
 
 # Stopwords removal is taking a long time given the size of our dataset. Let's skip it for now and create the feature based on our current dataset
 
-# In[24]:
+# In[45]:
 
 
 # Let's separate training and testing set
@@ -242,43 +242,109 @@ print(train.columns)
 print(test.columns)
 
 
+# In[47]:
+
+
+train.head(3)
+
+
+# ## Text to Features (feature engineering on text data)
+# 1. Initial Feature Analysis
+
+# In[48]:
+
+
+from nltk.tokenize import word_tokenize
+train[['question1','question2']] =train[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
+
+
+# In[49]:
+
+
+from nltk.corpus import stopwords
+
+# please note that converting stopwords to set is an important step as it increases efficiency. Otherwise it would take
+# forever to remove the stopwords
+stops = set(stopwords.words('english'))
+
+# finding number of common words between question 1 and question 2 before removing stopwords
+train['common_words_including_stopwords'] = train.apply(lambda x: len(set(x['question1']) & set(x['question2'])), axis = 1, raw  = True)
+#removing stopwords
+train['question1'] =train['question1'].apply(lambda y: [word for word in y if word not in stops])
+train['question2'] =train['question2'].apply(lambda y: [word for word in y if word not in stops])
+
+# finding number of common words between question 1 and question 2 after removing stpwords
+train['common_words_excluding_stopwords'] = train.apply(lambda x: len(set(x['question1']) & set(x['question2'])), axis = 1, raw  = True)
+
+
+# In[99]:
+
+
+train['len_1_without_stopwords'] = train['question1'].apply(lambda x: len(x))
+train['len_2_without_stopwords'] = train['question2'].apply(lambda x: len(x))
+
+
+# In[100]:
+
+
+# finding ratio of common words
+
+# train_valid = train[(train['common_words_excluding_stopwords']!=0) & (train['common_words_including_stopwords']!=0)]
+
+train['percent_with_stopwords'] = train.apply(lambda row: 0 if row['common_words_including_stopwords']==0 else 2*row['common_words_including_stopwords']/(row['len_1'] + row['len_2']) ,axis = 1, raw=  True)
+train['percent_without_stopwords'] = train.apply(lambda row: 0 if row['common_words_excluding_stopwords']==0 else 2*row['common_words_excluding_stopwords']/(row['len_1_without_stopwords'] + row['len_2_without_stopwords']) ,axis = 1, raw=  True)
+
+
+# I believe that number of common words in a pair of questions should be highly correlated with 'is_duplicate' columns. If this is the case, then we will use this to predict whether two questions are duplicates and will also look at accuracy.
+# 
+# #### Correlation between a continuous and categorical variable:
+# Usually, if we have a categorical variable with only two classe, we can use df.corr() to get the correlation between categorical and continuous variables
+
+# In[107]:
+
+
+train[['percent_with_stopwords','is_duplicate']].corr()
+
+
+# In[108]:
+
+
+train[['percent_without_stopwords','is_duplicate']].corr()
+
+
+# In[ ]:
+
+
+plt.figure(figsize=(15, 5))
+plt.hist(train[train['is_duplicate']==0]['percent_without_stopwords'], bins = 20, density = True, label ='not duplicate')
+plt.hist(train[train['is_duplicate']==1]['percent_without_stopwords'], bins = 20, density = True, label ='duplicate')
+plt.legend()
+plt.xlabel('word match percent')
+plt.ylabel('distribution')
+
+
 # In[ ]:
 
 
 
 
 
-# ## Text to Features (feature engineering on text data)
-# 
-
-# In[25]:
+# In[ ]:
 
 
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-# In[26]:
+
+# In[ ]:
 
 
-tfidf = TfidfVectorizer()
 
 
-# In[29]:
+
+# In[ ]:
 
 
-corpus =list (train['question1'])
 
-
-# In[30]:
-
-
-vector = tfidf.fit_transform(corpus)
-
-
-# In[35]:
-
-
-# print(vector)
 
 
 # In[ ]:
