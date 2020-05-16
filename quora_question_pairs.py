@@ -358,6 +358,67 @@ print(str(transformer.get_feature_names()[38685]) +' and ' +str(transformer.get_
 # 
 # Since, there are so many words in the corpus, and only few words are present in a document, so this matrix will have many zeros. To utilise memory efficiently, sklearn stores it as [sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix).
 
+# In[110]:
+
+
+# transforming all questions
+question_bow = transformer.transform([str(x).encode('utf-8') for x in all_questions_train])
+
+
+# In[114]:
+
+
+print(f'shape of sparse matrix: {question_bow.shape}')
+print(f'number of non zero values in sparse matrix:{question_bow.nnz}')
+print(f'sparsity = {(100 * question_bow.nnz )/(question_bow.shape[0]*question_bow.shape[1])}')
+
+
+# ### TF-IDF
+# 
+# After creating bag of words, we will give weightage to each words based on its importance using TF-IDF. A word occuring multiple times will be given less weightage as they are common words. Words having few occurrence imparts greater information to our model as far as the deduplication is considered.
+
+# In[115]:
+
+
+from sklearn.feature_extraction.text import TfidfTransformer
+tfidf_transformer = TfidfTransformer()
+tfidf_transformer.fit(question_bow)
+
+
+# In[120]:
+
+
+tf_idf_one = tfidf_transformer.transform(bow_one)
+print(f'bag of words: \n{bow_one}')
+print(f'tf idf: \n{tf_idf_one}')
+
+
+# Let's check inverse document frequency of any word:
+
+# In[139]:
+
+
+tfidf_transformer.idf_[transformer.vocabulary_['by']]
+
+
+# In[140]:
+
+
+questions_tfidf = tfidf_transformer.transform(question_bow)
+
+
+# In[148]:
+
+
+dic = {'a':1,'b':2}
+
+
+# In[150]:
+
+
+dic.get('a')
+
+
 # In[ ]:
 
 

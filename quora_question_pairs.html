@@ -14529,10 +14529,261 @@ in and step occur twice
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># transforming all questions</span>
+<span class="n">question_bow</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_questions_train</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;shape of sparse matrix: </span><span class="si">{question_bow.shape}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;number of non zero values in sparse matrix:</span><span class="si">{question_bow.nnz}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;sparsity = {(100 * question_bow.nnz )/(question_bow.shape[0]*question_bow.shape[1])}&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape of sparse matrix: (808580, 86152)
+number of non zero values in sparse matrix:8116971
+sparsity = 0.011652138427492546
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="TF-IDF">TF-IDF<a class="anchor-link" href="#TF-IDF">&#182;</a></h3><p>After creating bag of words, we will give weightage to each words based on its importance using TF-IDF. A word occuring multiple times will be given less weightage as they are common words. Words having few occurrence imparts greater information to our model as far as the deduplication is considered.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
+<span class="n">tfidf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">()</span>
+<span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">question_bow</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[115]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;1x86152 sparse matrix of type &#39;&lt;class &#39;numpy.float64&#39;&gt;&#39;
+	with 12 stored elements in Compressed Sparse Row format&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[120]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tf_idf_one</span> <span class="o">=</span> <span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">bow_one</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bag of words: </span><span class="se">\n</span><span class="si">{bow_one}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tf idf: </span><span class="se">\n</span><span class="si">{tf_idf_one}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>bag of words: 
+  (0, 14275)	1
+  (0, 34358)	1
+  (0, 38685)	2
+  (0, 38956)	1
+  (0, 40267)	1
+  (0, 40578)	1
+  (0, 47835)	1
+  (0, 69173)	1
+  (0, 72818)	2
+  (0, 76374)	1
+  (0, 77205)	1
+  (0, 83238)	1
+tf idf: 
+  (0, 83238)	0.07994432939339885
+  (0, 77205)	0.10292848737838771
+  (0, 76374)	0.08133813792547796
+  (0, 72818)	0.675799894336134
+  (0, 69173)	0.30875944223671564
+  (0, 47835)	0.28099307751011826
+  (0, 40578)	0.08859162984932425
+  (0, 40267)	0.2969124708651594
+  (0, 38956)	0.17880352838661534
+  (0, 38685)	0.20648144295493664
+  (0, 34358)	0.36673837437685436
+  (0, 14275)	0.2007384430435296
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's check inverse document frequency of any word:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[139]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">idf_</span><span class="p">[</span><span class="n">transformer</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">[</span><span class="s1">&#39;by&#39;</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[139]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4.871108260123616</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">questions_tfidf</span> <span class="o">=</span> <span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">question_bow</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[150]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>    
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
