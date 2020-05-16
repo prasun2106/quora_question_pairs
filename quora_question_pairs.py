@@ -62,7 +62,7 @@ df_train.head(3)
 # In[3]:
 
 
-df_test = pd.read_csv('test.csv.zip')
+df_test = pd.read_csv('test.csv.zip',dtype ='object')
 df_test.head(3)
 
 
@@ -211,7 +211,7 @@ train_test = pd.concat([df_train, df_test], axis = 0)
 # nltk.download()
 
 
-# In[20]:
+# In[16]:
 
 
 # Normalization
@@ -219,46 +219,28 @@ import string
 punc = string.punctuation
 train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: ''.join(char for char in y.lower() if char not in punc) ))
 
-# Tokenization
-# from nltk.tokenize import word_tokenize
-# train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
 
-# Stopwords removal
-# from nltk.corpus import stopwords
-# train_test[['question1','question2']] =train_test[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
-
-
-# Stopwords removal is taking a long time given the size of our dataset. Let's skip it for now and create the feature based on our current dataset
-
-# In[45]:
+# In[26]:
 
 
 # Let's separate training and testing set
-train = train_test[train_test['source'] == 'train']
-test = train_test[train_test['source'] == 'test']
+train = train_test.loc[train_test['source'] == 'train']
+test = train_test.loc[train_test['source'] == 'test']
 train.drop(['source','test_id'], axis = 1, inplace = True)
 test.drop(['source','id', 'qid1','qid2','is_duplicate'], axis = 1, inplace = True)
-print(train.columns)
-print(test.columns)
-
-
-# In[47]:
-
-
-train.head(3)
 
 
 # ## Text to Features (feature engineering on text data)
 # 1. Initial Feature Analysis
 
-# In[48]:
+# In[31]:
 
 
 from nltk.tokenize import word_tokenize
 train[['question1','question2']] =train[['question1','question2']].apply(lambda x: x.apply(lambda y: word_tokenize(y)))
 
 
-# In[49]:
+# In[32]:
 
 
 from nltk.corpus import stopwords
@@ -277,14 +259,14 @@ train['question2'] =train['question2'].apply(lambda y: [word for word in y if wo
 train['common_words_excluding_stopwords'] = train.apply(lambda x: len(set(x['question1']) & set(x['question2'])), axis = 1, raw  = True)
 
 
-# In[99]:
+# In[33]:
 
 
 train['len_1_without_stopwords'] = train['question1'].apply(lambda x: len(x))
 train['len_2_without_stopwords'] = train['question2'].apply(lambda x: len(x))
 
 
-# In[100]:
+# In[34]:
 
 
 # finding ratio of common words
@@ -300,52 +282,81 @@ train['percent_without_stopwords'] = train.apply(lambda row: 0 if row['common_wo
 # #### Correlation between a continuous and categorical variable:
 # Usually, if we have a categorical variable with only two classe, we can use df.corr() to get the correlation between categorical and continuous variables
 
-# In[107]:
+# In[35]:
 
 
 train[['percent_with_stopwords','is_duplicate']].corr()
 
 
-# In[108]:
+# In[36]:
 
 
 train[['percent_without_stopwords','is_duplicate']].corr()
 
 
-# In[ ]:
+# In[37]:
 
 
 plt.figure(figsize=(15, 5))
-plt.hist(train[train['is_duplicate']==0]['percent_without_stopwords'], bins = 20, density = True, label ='not duplicate')
-plt.hist(train[train['is_duplicate']==1]['percent_without_stopwords'], bins = 20, density = True, label ='duplicate')
+plt.hist(train[train['is_duplicate']==0]['percent_without_stopwords'], bins = 50, density = True, label ='not duplicate')
+plt.hist(train[train['is_duplicate']==1]['percent_without_stopwords'], bins = 50, density = True, label ='duplicate')
 plt.legend()
 plt.xlabel('word match percent')
 plt.ylabel('distribution')
 
 
-# In[ ]:
+# ### Bingo!
+# 
+# As expected, duplicate pairs have more word matches as compared to non duplicate ones. We can use this new feature to predict the duplicates.
+# I am now going to improve this feature by using TF-IDF
+
+# In[88]:
 
 
+# import CountVectorizer that will be used for creating count of each word in our corpus
+from sklearn.feature_extraction.text import CountVectorizer
+# our corpus is the collection of all 
+corpus = all_questions_train
+# make an instance of CountVectorizer object
+vectorizer = CountVectorizer()
+# Tokenize and build vocab
+transformer = vectorizer.fit(all_questions)
+# Understanding transformer
+print(type(transformer.vocabulary_)) # tranformer.vocabulary_ is a dictionary with word as key and an id for that word as value
 
 
-
-# In[ ]:
-
+# In[89]:
 
 
+print(len(transformer.vocabulary_))
 
 
-# In[ ]:
+# It means that there are 86152 words in this corpus
+
+# In[94]:
 
 
+# Understanding transform with one example
+q = all_questions_train[0] # q = 'What is the step by step guide to invest in share market in india?'
+bow_one = transformer.transform([q])
+print(bow_one.shape)
+print(bow_one)
 
 
-
-# In[ ]:
-
+# In[101]:
 
 
+# printing few words to understand the meaning of above result
+print(q)
+print(str(transformer.get_feature_names()[14275]) + ' occurs 1 time')
+print(str(transformer.get_feature_names()[38685]) +' and ' +str(transformer.get_feature_names()[72818]) + ' occur twice')
 
+
+# It means that the transform method transforms the passed quantity (in this case, q) into a matrix having as many rows as the number of documents (in this case, 1) and having as many columns as the number of words in the corpus (in this case, 86152). The object bow_one is a sparse matrix where all the values are 0, except the one shown above. "(0,14275) 1" means that in the first document, the word mapped to 14275 has only 1 occurrence across the corpus (that is, the entire collection of questions). To understand it better please look at the following:
+# 
+# ![bag_of_words](images/bag_of_words.png)
+# 
+# Since, there are so many words in the corpus, and only few words are present in a document, so this matrix will have many zeros. To utilise memory efficiently, sklearn stores it as [sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix).
 
 # In[ ]:
 
